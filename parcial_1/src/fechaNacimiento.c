@@ -191,7 +191,7 @@ int existeFechaNacimiento(FechaNacimiento arr[], int len, int id) {
 
 
 int incrementarFechaNacimientoId(void) {
-	static int id = 150;
+	static int id = 10;
 	id++;
 
 	return id;

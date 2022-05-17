@@ -52,19 +52,21 @@ int buscarEspacioLibreCensista(Censista arr[], int len);
 int buscarCensistaPorId(Censista arr[], int id, int len);
 
 
-///// @brief Carga un pasajero al array en el primer indice disponible
-/////
-///// @param arr -> array de pasajeros
-///// @param len -> longitud del array
-///// @param id -> id autoincremental
-///// @param nombre -> nombre del pasajero
-///// @param apellido -> apellido del pasajero
-///// @param precio -> precio del vuelo
-///// @param tipoPasajero -> PRIMERA_CLASE (0), EJECUTIVO (1), PREMIUM (2)
-///// @param codigoVuelo -> valor alfanumerico
-///// @param estadoVuelo -> ACTIVO (0), DEMORADO (1), CANCELADO (2)
-///// @return En caso de exito (0), en caso de error (-1)
-//int agregarPasajero(Pasajero arr[], int len, int id, char * nombre, char * apellido, float precio, int tipoPasajero, char * codigoVuelo, int estadoVuelo );
+/// @brief Carga un censista al array en el primer indice disponible
+///
+/// @param arr -> array de censistas
+/// @param len -> longitud del array
+/// @param id -> id autoincremental
+/// @param nombre -> nombre del censista
+/// @param apellido -> apellido del censista
+/// @param dia -> dia de nacimineto del censista
+/// @param mes -> mes del anio de nacimiento del censista 0 a 11
+/// @param anio -> año de nacimiento del censista
+/// @param edad -> edad del censista
+/// @param nombreCalle -> nombre de la calle del censista
+/// @param numeroCalle -> numero del domicilio del censista
+/// @return En caso de exito (0), en caso de error (-1)
+int agregarCensista(Censista arr[], int len, int id, char * nombre, char * apellido, int dia, int mes, int anio, int edad, char * nombreCalle, int numeroCalle);
 
 
 /// @brief Elimina un censista del array
@@ -107,18 +109,18 @@ int existeCensista(Censista arr[], int len, int id);
 ///
 int incrementarCensistaId(void);
 
-//
-///// @brief Imprime los datos del pasajero dado
-/////
-///// @param pasajero -> struct con los datos del pasajero
-//void imprimirPasajero(Pasajero pasajero);
+
+/// @brief Imprime los datos del censista dado
+///
+/// @param pasajero -> struct con los datos del censista
+void imprimirCensista(Censista censista);
 
 
-///// @brief Imprime todos los pasajeros
-/////
-///// @param arr -> array de pasajeros
-///// @param len -> longitud del array
-//void imprimirPasajeros(Pasajero arr[], int len);
+/// @brief Imprime todos los censistas
+///
+/// @param arr -> array de censistas
+/// @param len -> longitud del array
+void imprimirCensistas(Censista arr[], int len);
 
 
 ///// @brief Imprime todos los pasajeros
@@ -155,8 +157,8 @@ int incrementarCensistaId(void);
 //int hacerCargaForzada(Pasajero arr[], int len);
 
 
-///// @brief Imprime la cabecera de la tabla de pasajeros
-//void imprimirCabecera(void);
+/// @brief Imprime la cabecera de la tabla de censistas
+void imprimirCabeceraCensista(void);
 
 
 ///// @brief Calcula el total de los precios de todos los pasajeros

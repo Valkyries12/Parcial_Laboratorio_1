@@ -24,16 +24,29 @@
 
 int main(void) {
 	Censista censistas[CANTIDAD_CENSISTAS];
-	FechaNacimiento fechaNacimientos[CANTIDAD_CENSISTAS];
-	Direccion direcciones[CANTIDAD_CENSISTAS];
-	Zona zonas[100];
-	Localidad localidades[][51] = {"Lanús", "Avellaneda", "Gerli", "Remedios de Escalada", "Bandfield", "Lomas de Zamora", "Berazategui", "La Plata", "Glew", "Maximiliano Korn"};
+//	FechaNacimiento fechaNacimientos[CANTIDAD_CENSISTAS];
+//	Direccion direcciones[CANTIDAD_CENSISTAS];
+//	Zona zonas[100];
+//	Localidad localidades[][51] = {"Lanús", "Avellaneda", "Gerli", "Remedios de Escalada", "Bandfield", "Lomas de Zamora", "Berazategui", "La Plata", "Glew", "Maximiliano Korn"};
+
+	int idCensista;
+	char nombreCensista[51];
+	char apellidoCensista[51];
+	int dia;
+	int mes;
+	int anio;
+	int edad;
+//	int estadoCensista;
+	char nombreCalle[51];
+	int numeroCalle;
+//	int idZona;
 
 	int codigoError;
 	int opcionMenu;
 
 	setbuf(stdout, NULL);
 	puts("=== INICIO DEL PROGRAMA ===");
+	inicializarCensistas(censistas, CANTIDAD_CENSISTAS);
 
 	do {
 		codigoError = utn_getInt(&opcionMenu, "\n1- Cargar censista. \n2- Modificar censista. \n3- Eliminar censista. \n4- Cargar zona. \n5- Asignar zona a censar. \n6- Carga de datos. \n7- Mostrar censistas. \n8- Mostrar zonas. \n9- Salir. \n\nIngrese una opción: ", "\nOpción inválida. Reintente.\n", 9, 1, 3);
@@ -42,6 +55,42 @@ int main(void) {
 			switch (opcionMenu) {
 				case 1:
 					puts("\n=== CARGA DEL CENSISTA ===\n");
+					codigoError = utn_getString(nombreCensista, "\nIngrese el nombre del censista: ", "\nError. Debe contener sólo letras y tener entre 4 y 15 caractéres.\n", 3, 4, 15);
+					if (codigoError == 0) {
+						codigoError = utn_getString(apellidoCensista, "\nIngrese el apellido del censista: ", "\nError. Debe contener sólo letras y tener entre 4 y 15 caractéres.\n", 3, 4, 15);
+
+						if (codigoError == 0) {
+							codigoError = utn_getInt(&dia, "\nIngrese el día de nacimiento del censista [1 a 31]: ", "\nError. Debe contener sólo números del 1 al 31.\n", 31, 1, 3);
+
+							if (codigoError == 0) {
+								codigoError = utn_getInt(&mes, "\nIngrese el mes de nacimiento del censista [1 a 12]: ", "\nError. Debe contener sólo números del 1 al 12.\n", 12, 1, 3);
+
+								if (codigoError == 0) {
+									codigoError = utn_getInt(&anio, "\nIngrese el año de nacimiento del censista [1960 a 2022]: ", "\nError. Debe contener sólo números entre 1960 y 2022.\n", 2022, 1960, 3);
+
+									if (codigoError == 0) {
+										edad = 2022 - anio;
+
+										if (codigoError == 0) {
+											codigoError = utn_getString(nombreCalle, "\nIngrese la calle de domicilio del censista: ", "\nError. Debe contener sólo letras y tener entre 4 y 30 caractéres.\n", 3, 4, 30);
+
+											if (codigoError == 0) {
+												codigoError = utn_getInt(&numeroCalle, "\nIngrese el número de domicilio del censista: ", "\nError. Debe contener sólo números y estar entre 1 y 3500", 3500, 1, 3);
+												idCensista = incrementarCensistaId();
+
+												if (codigoError == 0) {
+													codigoError = agregarCensista(censistas, CANTIDAD_CENSISTAS, idCensista, nombreCensista, apellidoCensista, dia, mes, anio, edad, nombreCalle, numeroCalle);
+
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+
+					utn_imprimirMensajes(codigoError, "\nSe han ingresado los datos satisfactoriamente.\n", "\nHa sucedido un error en la carga de datos.\n");
 					break;
 				case 2:
 					puts("\n=== MODIFICAR CENSISTA ===\n");
@@ -60,6 +109,13 @@ int main(void) {
 					break;
 				case 7:
 					puts("\n=== MOSTRAR CENSISTAS ===\n");
+
+					if (hayCensistaCargado(censistas, CANTIDAD_CENSISTAS)) {
+						imprimirCabeceraCensista();
+						imprimirCensistas(censistas, CANTIDAD_CENSISTAS);
+					} else {
+						puts("\nDebe haber al menos un censista cargado.\n");
+					}
 					break;
 				case 8:
 					puts("\n=== MOSTRAR ZONAS ===\n");

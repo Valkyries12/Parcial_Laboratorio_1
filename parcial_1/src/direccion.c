@@ -192,7 +192,7 @@ int existeDireccion(Direccion arr[], int len, int id) {
 
 
 int incrementarDireccionId(void) {
-	static int id = 150;
+	static int id = 20;
 	id++;
 
 	return id;

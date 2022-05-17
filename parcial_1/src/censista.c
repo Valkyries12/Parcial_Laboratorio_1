@@ -13,9 +13,13 @@
 
 #include "censista.h"
 #include "utn.h"
+#include "direccion.h"
+#include "fechaNacimiento.h"
 
 #define TRUE 1
 #define FALSE 0
+
+char estadoCensista[][10] = {"ACTIVO", "INACTIVO", "LIBERADO"};
 
 
 
@@ -71,32 +75,41 @@ int buscarCensistaPorId(Censista arr[], int id, int len) {
 
 
 
-//int agregarPasajero(Pasajero arr[], int len, int id, char * nombre, char * apellido, float precio, int tipoPasajero, char * codigoVuelo, int estadoVuelo ) {
-//	int codigoError;
-//	int indice;
-//
-//	codigoError = -1;
-//	if (arr != NULL && len > 0 && id > 0 && nombre != NULL && apellido != NULL && precio > 0 && tipoPasajero >= 0 && codigoVuelo != NULL && estadoVuelo >= 0) {
-//		indice = buscarEspacioLibre(arr, len);
-//		if (indice != -1) {
-//
-//			arr[indice].id = id;
-//			strncpy(arr[indice].nombre, nombre, strlen(nombre));
-//			strncpy(arr[indice].apellido, apellido, strlen(apellido));
-//			arr[indice].precio = precio;
-//			arr[indice].tipoPasajero = tipoPasajero;
-//			strncpy(arr[indice].codigoVuelo, codigoVuelo, strlen(codigoVuelo));
-//			arr[indice].estadoVuelo = estadoVuelo;
-//			arr[indice].isEmpty = FALSE;
-//			codigoError = 0;
-//		} else {
-//			puts("\n\nNo se pueden agregar más pasajeros");
-//		}
-//	}
-//
-//
-//	return codigoError;
-//}
+int agregarCensista(Censista arr[], int len, int id, char * nombre, char * apellido, int dia, int mes, int anio, int edad, char * nombreCalle, int numeroCalle) {
+	int codigoError;
+	int indice;
+
+	codigoError = -1;
+	if (arr != NULL && len > 0 && id > 0 && nombre != NULL && apellido != NULL && dia > 0 && mes >= 0 && anio > 0 && edad > 17 && nombreCalle != NULL && numeroCalle > 0) {
+		indice = buscarEspacioLibreCensista(arr, len);
+		if (indice != -1) {
+
+			arr[indice].id = id;
+			strncpy(arr[indice].nombre, nombre, strlen(nombre));
+			strncpy(arr[indice].apellido, apellido, strlen(apellido));
+			//autoincrementar id de dia y isEmpty?
+			arr[indice].fechaNacimiento.id = incrementarFechaNacimientoId();
+			arr[indice].fechaNacimiento.dia = dia;
+			arr[indice].fechaNacimiento.mes = mes;
+			arr[indice].fechaNacimiento.anio = anio;
+			arr[indice].fechaNacimiento.isEmpty = FALSE;
+			arr[indice].edad = edad;
+			arr[indice].estadoCensista = 1;
+			//autoinrementar id de direccion y isEmpty ?
+			arr[indice].direccion.id = incrementarDireccionId();
+			strncpy(arr[indice].direccion.calle, nombreCalle, strlen(nombreCalle));
+			arr[indice].direccion.numero = numeroCalle;
+			arr[indice].direccion.isEmpty = FALSE;
+			arr[indice].isEmpty = FALSE;
+			codigoError = 0;
+		} else {
+			puts("\n\nNo se pueden agregar más censistas");
+		}
+	}
+
+
+	return codigoError;
+}
 
 
 
@@ -201,41 +214,42 @@ int incrementarCensistaId(void) {
 
 
 
-//void imprimirPasajero(Pasajero pasajero) {
-//	utn_convertirAMayuscula(pasajero.codigoVuelo);
-//	if (pasajero.isEmpty == FALSE) {
-//		printf("|%6d", pasajero.id);
-//		printf("|%20s", pasajero.nombre);
-//		printf("|%20s", pasajero.apellido);
-//		printf("|%20f", pasajero.precio);
-//		printf("|%15s", pasajero.codigoVuelo);
-//		printf("|%20s", opcionTipoPasajero[pasajero.tipoPasajero]);
-//		printf("|%15s|\n", opcionEstadoVuelo[pasajero.estadoVuelo]);
-//	}
-//}
+void imprimirCensista(Censista censista) {
+	if (censista.isEmpty == FALSE) {
+		printf("|%6d", censista.id);
+		printf("|%20s", censista.nombre);
+		printf("|%20s", censista.apellido);
+		printf("|%3d/%3d/%3d  ", censista.fechaNacimiento.dia, censista.fechaNacimiento.mes, censista.fechaNacimiento.anio);
+		printf("|%6d", censista.edad);
+		printf("|%10s", estadoCensista[censista.estadoCensista]);
+		printf("|%12s %8d", censista.direccion.calle, censista.direccion.numero);
+		printf("|%15d|", censista.idZona);
+	}
+}
 
 
-//void imprimirCabecera(void) {
-//
-//		printf("|%6s", "ID");
-//		printf("|%20s", "NOMBRE");
-//		printf("|%20s", "APELLIDO");
-//		printf("|%20s", "PRECIO");
-//		printf("|%15s", "CÓDIGO VUELO");
-//		printf("|%20s", "TIPO PASAJERO");
-//		printf("|%15s|\n\n", "ESTADO VUELO");
-//
-//}
+void imprimirCabeceraCensista(void) {
+
+		printf("|%6s", "ID");
+		printf("|%20s", "NOMBRE");
+		printf("|%20s", "APELLIDO");
+		printf("|%20s", "FECHA NACIMIENTO");
+		printf("|%6s", "EDAD");
+		printf("|%10s", "ESTADO");
+		printf("|%20s", "DIRECCIÓN");
+		printf("|%15s|\n\n", "ZONA");
+
+}
 
 
 
-//void imprimirPasajeros(Pasajero arr[], int len) {
-//	if (arr != NULL) {
-//		for(int i = 0; i < len; i++) {
-//			imprimirPasajero(arr[i]);
-//		}
-//	}
-//}
+void imprimirCensistas(Censista arr[], int len) {
+	if (arr != NULL) {
+		for(int i = 0; i < len; i++) {
+			imprimirCensista(arr[i]);
+		}
+	}
+}
 
 
 
