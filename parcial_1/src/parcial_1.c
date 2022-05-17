@@ -21,15 +21,16 @@
 #define TRUE 1
 #define FALSE 0
 #define CANTIDAD_CENSISTAS 200
+#define CANTIDAD_ZONAS 6
 
 int main(void) {
 	Censista censistas[CANTIDAD_CENSISTAS];
 //	FechaNacimiento fechaNacimientos[CANTIDAD_CENSISTAS];
 //	Direccion direcciones[CANTIDAD_CENSISTAS];
-//	Zona zonas[100];
+	Zona zonas[CANTIDAD_ZONAS];
 //	Localidad localidades[][51] = {"Lanús", "Avellaneda", "Gerli", "Remedios de Escalada", "Bandfield", "Lomas de Zamora", "Berazategui", "La Plata", "Glew", "Maximiliano Korn"};
 
-	int idCensista;
+	int id;
 	char nombreCensista[51];
 	char apellidoCensista[51];
 	int dia;
@@ -41,12 +42,16 @@ int main(void) {
 	int numeroCalle;
 //	int idZona;
 
+
+	char calles[4][51];
+	int localidad;
 	int codigoError;
 	int opcionMenu;
 
 	setbuf(stdout, NULL);
 	puts("=== INICIO DEL PROGRAMA ===");
 	inicializarCensistas(censistas, CANTIDAD_CENSISTAS);
+	inicializarZonas(zonas, CANTIDAD_ZONAS);
 
 	do {
 		codigoError = utn_getInt(&opcionMenu, "\n1- Cargar censista. \n2- Modificar censista. \n3- Eliminar censista. \n4- Cargar zona. \n5- Asignar zona a censar. \n6- Carga de datos. \n7- Mostrar censistas. \n8- Mostrar zonas. \n9- Salir. \n\nIngrese una opción: ", "\nOpción inválida. Reintente.\n", 9, 1, 3);
@@ -76,10 +81,10 @@ int main(void) {
 
 											if (codigoError == 0) {
 												codigoError = utn_getInt(&numeroCalle, "\nIngrese el número de domicilio del censista: ", "\nError. Debe contener sólo números y estar entre 1 y 3500", 3500, 1, 3);
-												idCensista = incrementarCensistaId();
+												id = incrementarCensistaId();
 
 												if (codigoError == 0) {
-													codigoError = agregarCensista(censistas, CANTIDAD_CENSISTAS, idCensista, nombreCensista, apellidoCensista, dia, mes, anio, edad, nombreCalle, numeroCalle);
+													codigoError = agregarCensista(censistas, CANTIDAD_CENSISTAS, id, nombreCensista, apellidoCensista, dia, mes, anio, edad, nombreCalle, numeroCalle);
 
 												}
 											}
@@ -100,6 +105,21 @@ int main(void) {
 					break;
 				case 4:
 					puts("\n=== CARGAR ZONA ===\n");
+					int i = 0;
+					do {
+						codigoError = utn_getString(calles[i], "\nIngrese el nombre de la calle en la zona: ", "\nError. Debe contener sólo letras y tener 6 a 20 caractéres.\n", 3, 6, 20);
+						i++;
+					} while(i < 4 && codigoError == 0);
+					if (codigoError == 0) {
+						codigoError = utn_getInt(&localidad, "\n0- Bandfield. \n1- Lanús. \n2- Escalada. \n3- Temperley. \n4- Gerli. \n5- Avellaneda. \n\nIngrese una localidad: ", "\nOpción inválidad. Reintente.\n", 5, 1, 3);
+
+						if (codigoError == 0) {
+							id = incrementarZonaId();
+							agregarZona(zonas, CANTIDAD_ZONAS, id, calles, localidad);
+						}
+					}
+
+					utn_imprimirMensajes(codigoError, "\nSe ha agregado una zona satisfactoriamente.\n", "\nHa ocurrido un error al agregar una zona.\n");
 					break;
 				case 5:
 					puts("\n=== ASIGNAR ZONA A CENSAR ===\n");
@@ -119,6 +139,13 @@ int main(void) {
 					break;
 				case 8:
 					puts("\n=== MOSTRAR ZONAS ===\n");
+
+					if (hayZonaCargada(zonas, CANTIDAD_ZONAS)) {
+						imprimirCabeceraZona();
+						imprimirZonas(zonas, CANTIDAD_ZONAS);
+					} else {
+						puts("\nDebe haber al menos una zona cargada.\n");
+					}
 					break;
 				default:
 					break;

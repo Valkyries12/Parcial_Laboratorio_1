@@ -45,19 +45,15 @@ int buscarEspacioLibreZona(Zona arr[], int len);
 int buscarZonaPorId(Zona arr[], int id, int len);
 
 
-///// @brief Carga un pasajero al array en el primer indice disponible
-/////
-///// @param arr -> array de pasajeros
-///// @param len -> longitud del array
-///// @param id -> id autoincremental
-///// @param nombre -> nombre del pasajero
-///// @param apellido -> apellido del pasajero
-///// @param precio -> precio del vuelo
-///// @param tipoPasajero -> PRIMERA_CLASE (0), EJECUTIVO (1), PREMIUM (2)
-///// @param codigoVuelo -> valor alfanumerico
-///// @param estadoVuelo -> ACTIVO (0), DEMORADO (1), CANCELADO (2)
-///// @return En caso de exito (0), en caso de error (-1)
-//int agregarPasajero(Pasajero arr[], int len, int id, char * nombre, char * apellido, float precio, int tipoPasajero, char * codigoVuelo, int estadoVuelo );
+/// @brief Carga una zona al array en el primer indice disponible
+///
+/// @param arr -> array de zonas
+/// @param len -> longitud del array
+/// @param id -> id autoincremental
+/// @param calles -> array con 4 nombres de calles
+/// @param idLocalidad -> localidad
+/// @return En caso de exito (0), en caso de error (-1)
+int agregarZona(Zona arr[], int len, int id, char calles[][51], int idLocalidad);
 
 
 /// @brief Elimina una zona del array
@@ -100,18 +96,18 @@ int existeZona(Zona arr[], int len, int id);
 ///
 int incrementarZonaId(void);
 
-//
-///// @brief Imprime los datos del pasajero dado
-/////
-///// @param pasajero -> struct con los datos del pasajero
-//void imprimirPasajero(Pasajero pasajero);
+
+/// @brief Imprime los datos de la zona dada
+///
+/// @param zona -> struct con los datos de la zona
+void imprimirZona(Zona zona);
 
 
-///// @brief Imprime todos los pasajeros
-/////
-///// @param arr -> array de pasajeros
-///// @param len -> longitud del array
-//void imprimirPasajeros(Pasajero arr[], int len);
+/// @brief Imprime todas las zonas
+///
+/// @param arr -> array de zonas
+/// @param len -> longitud del array
+void imprimirZonas(Zona arr[], int len);
 
 
 ///// @brief Imprime todos los pasajeros
@@ -148,8 +144,8 @@ int incrementarZonaId(void);
 //int hacerCargaForzada(Pasajero arr[], int len);
 
 
-///// @brief Imprime la cabecera de la tabla de pasajeros
-//void imprimirCabecera(void);
+/// @brief Imprime la cabecera de la tabla de zonas
+void imprimirCabeceraZona(void);
 
 
 ///// @brief Calcula el total de los precios de todos los pasajeros

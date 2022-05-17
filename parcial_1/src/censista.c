@@ -219,7 +219,7 @@ void imprimirCensista(Censista censista) {
 		printf("|%6d", censista.id);
 		printf("|%20s", censista.nombre);
 		printf("|%20s", censista.apellido);
-		printf("|%3d/%3d/%3d  ", censista.fechaNacimiento.dia, censista.fechaNacimiento.mes, censista.fechaNacimiento.anio);
+		printf("|%10d/%d/%d    ", censista.fechaNacimiento.dia, censista.fechaNacimiento.mes, censista.fechaNacimiento.anio);
 		printf("|%6d", censista.edad);
 		printf("|%10s", estadoCensista[censista.estadoCensista]);
 		printf("|%12s %8d", censista.direccion.calle, censista.direccion.numero);
@@ -233,7 +233,7 @@ void imprimirCabeceraCensista(void) {
 		printf("|%6s", "ID");
 		printf("|%20s", "NOMBRE");
 		printf("|%20s", "APELLIDO");
-		printf("|%20s", "FECHA NACIMIENTO");
+		printf("|%21s", "FECHA NACIMIENTO");
 		printf("|%6s", "EDAD");
 		printf("|%10s", "ESTADO");
 		printf("|%20s", "DIRECCIÓN");

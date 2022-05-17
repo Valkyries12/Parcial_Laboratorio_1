@@ -15,7 +15,7 @@
 #define TRUE 1
 #define FALSE 0
 
-int inicializarZona(Zona arr[], int len) {
+int inicializarZonas(Zona arr[], int len) {
 	int codigoError;
 
 	codigoError = -1;
@@ -67,32 +67,31 @@ int buscarZonaPorId(Zona arr[], int id, int len) {
 
 
 
-//int agregarPasajero(Pasajero arr[], int len, int id, char * nombre, char * apellido, float precio, int tipoPasajero, char * codigoVuelo, int estadoVuelo ) {
-//	int codigoError;
-//	int indice;
-//
-//	codigoError = -1;
-//	if (arr != NULL && len > 0 && id > 0 && nombre != NULL && apellido != NULL && precio > 0 && tipoPasajero >= 0 && codigoVuelo != NULL && estadoVuelo >= 0) {
-//		indice = buscarEspacioLibre(arr, len);
-//		if (indice != -1) {
-//
-//			arr[indice].id = id;
-//			strncpy(arr[indice].nombre, nombre, strlen(nombre));
-//			strncpy(arr[indice].apellido, apellido, strlen(apellido));
-//			arr[indice].precio = precio;
-//			arr[indice].tipoPasajero = tipoPasajero;
-//			strncpy(arr[indice].codigoVuelo, codigoVuelo, strlen(codigoVuelo));
-//			arr[indice].estadoVuelo = estadoVuelo;
-//			arr[indice].isEmpty = FALSE;
-//			codigoError = 0;
-//		} else {
-//			puts("\n\nNo se pueden agregar más pasajeros");
-//		}
-//	}
-//
-//
-//	return codigoError;
-//}
+int agregarZona(Zona arr[], int len, int id, char calles[4][51], int idLocalidad) {
+	int codigoError;
+	int indice;
+
+	codigoError = -1;
+	if (arr != NULL && len > 0 && id > 0 && calles != NULL) {
+		indice = buscarEspacioLibreZona(arr, len);
+		if (indice != -1) {
+
+			arr[indice].id = id;
+			strncpy(arr[indice].calles[0], calles[0], strlen(calles[0]));
+			strncpy(arr[indice].calles[1], calles[1], strlen(calles[1]));
+			strncpy(arr[indice].calles[2], calles[2], strlen(calles[2]));
+			strncpy(arr[indice].calles[3], calles[3], strlen(calles[3]));
+			arr[indice].idLocalidad = idLocalidad;
+			arr[indice].isEmpty = FALSE;
+			codigoError = 0;
+		} else {
+			puts("\n\nNo se pueden agregar más zonas.");
+		}
+	}
+
+
+	return codigoError;
+}
 
 
 
@@ -197,41 +196,31 @@ int incrementarZonaId(void) {
 
 
 
-//void imprimirPasajero(Pasajero pasajero) {
-//	utn_convertirAMayuscula(pasajero.codigoVuelo);
-//	if (pasajero.isEmpty == FALSE) {
-//		printf("|%6d", pasajero.id);
-//		printf("|%20s", pasajero.nombre);
-//		printf("|%20s", pasajero.apellido);
-//		printf("|%20f", pasajero.precio);
-//		printf("|%15s", pasajero.codigoVuelo);
-//		printf("|%20s", opcionTipoPasajero[pasajero.tipoPasajero]);
-//		printf("|%15s|\n", opcionEstadoVuelo[pasajero.estadoVuelo]);
-//	}
-//}
+void imprimirZona(Zona zona) {
+	if (zona.isEmpty == FALSE) {
+		printf("|%6d", zona.id);
+		printf("|%s %s %s %s", zona.calles[0], zona.calles[1], zona.calles[2], zona.calles[3]);
+		printf("|%20d|\n", zona.idLocalidad);
+	}
+}
 
 
-//void imprimirCabecera(void) {
-//
-//		printf("|%6s", "ID");
-//		printf("|%20s", "NOMBRE");
-//		printf("|%20s", "APELLIDO");
-//		printf("|%20s", "PRECIO");
-//		printf("|%15s", "CÓDIGO VUELO");
-//		printf("|%20s", "TIPO PASAJERO");
-//		printf("|%15s|\n\n", "ESTADO VUELO");
-//
-//}
+void imprimirCabeceraZona(void) {
+
+		printf("|%6s", "ID");
+		printf("|%40s", "CALLES");
+		printf("|%20s|\n\n", "LOCALIDAD");
+}
 
 
 
-//void imprimirPasajeros(Pasajero arr[], int len) {
-//	if (arr != NULL) {
-//		for(int i = 0; i < len; i++) {
-//			imprimirPasajero(arr[i]);
-//		}
-//	}
-//}
+void imprimirZonas(Zona arr[], int len) {
+	if (arr != NULL) {
+		for(int i = 0; i < len; i++) {
+			imprimirZona(arr[i]);
+		}
+	}
+}
 
 
 
