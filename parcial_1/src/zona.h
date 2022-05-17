@@ -11,6 +11,7 @@
 typedef struct {
 	int id;
 	char calles[4][51];
+	int estadoZona;
 	int idLocalidad;
 	int isEmpty;
 }Zona;

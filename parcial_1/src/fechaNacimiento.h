@@ -9,9 +9,11 @@
 #define FECHANACIMIENTO_H_
 
 typedef struct {
+	int id;
 	int dia;
 	int mes;
 	int anio;
+	int isEmpty;
 }FechaNacimiento;
 
 #endif /* FECHANACIMIENTO_H_ */

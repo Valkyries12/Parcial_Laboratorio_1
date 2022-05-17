@@ -9,8 +9,10 @@
 #define DIRECCION_H_
 
 typedef struct {
+	int id;
 	char calle[51];
 	int numero;
+	int isEmpty;
 }Direccion;
 
 
