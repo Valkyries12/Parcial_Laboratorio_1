@@ -216,23 +216,27 @@ int incrementarCensistaId(void) {
 
 void imprimirCensista(Censista censista) {
 	if (censista.isEmpty == FALSE) {
-		printf("|%6d", censista.id);
-		printf("|%20s", censista.nombre);
-		printf("|%20s", censista.apellido);
+		printf("|%4d", censista.id);
+		printf("|%12s", censista.nombre);
+		printf("|%12s", censista.apellido);
 		printf("|%10d/%d/%d    ", censista.fechaNacimiento.dia, censista.fechaNacimiento.mes, censista.fechaNacimiento.anio);
 		printf("|%6d", censista.edad);
 		printf("|%10s", estadoCensista[censista.estadoCensista]);
-		printf("|%12s %8d", censista.direccion.calle, censista.direccion.numero);
-		printf("|%15d|", censista.idZona);
+		printf("|%12s %4d", censista.direccion.calle, censista.direccion.numero);
+		if (censista.idZona == 0) {
+			printf("|%15s|\n", "sin zona");
+		} else {
+			printf("|%15d|\n", censista.idZona);
+		}
 	}
 }
 
 
 void imprimirCabeceraCensista(void) {
 
-		printf("|%6s", "ID");
-		printf("|%20s", "NOMBRE");
-		printf("|%20s", "APELLIDO");
+		printf("|%4s", "ID");
+		printf("|%12s", "NOMBRE");
+		printf("|%12s", "APELLIDO");
 		printf("|%21s", "FECHA NACIMIENTO");
 		printf("|%6s", "EDAD");
 		printf("|%10s", "ESTADO");
@@ -370,31 +374,39 @@ void imprimirCensistas(Censista arr[], int len) {
 
 
 
-//int hacerCargaForzada(Pasajero arr[], int len) {
-//	int codigoError;
-//	int id;
-//	char nombres[][51] = {"Malvina", "Martin", "Mariana", "Pedro", "Juan", "Nicolas", "Andrea", "Carlos", "Lucas", "Maximiliano", "Hector", "Jesica", "Gabriel", "Horacio", "Oscar"};
-//	char apellidos[][51] = {"Sainz", "Godirio", "Valenzuela", "Acosta", "Lopez","Caruso", "Bollati", "Vitola", "Calvo", "Biglia", "Thomas", "Paulovies", "Marino", "Bollati", "Chananpa"};
-//	float precios[] = {4500, 45000, 72345, 25000, 13200, 6500, 7200, 30255, 7900, 17456, 56789, 25400, 9800, 27890, 15600};
-//	int tipoPasajeros[] = {1, 0, 1, 2 ,0, 1, 2, 0, 0, 1, 2, 0, 1, 1, 2};
-//	char codigoVuelos[][10] = {"FGHQWE", "TYUQWE", "POILKJ", "FGHVBN", "YUIJKL","ARARAR", "QWEASD", "ASDQWE", "ZXCVBN", "QWERTY", "TYUGHJ", "TYUQWE", "ASDFGH", "UIOPJK", "QWEASD"};
-//	int estadoVuelos[] = {1, 2, 2, 0, 1, 0, 2, 1, 1, 1, 2, 0, 0, 2, 1};
-//	codigoError = -1;
-//
-//	if (arr != NULL) {
-//		for(int i = 0; i < 15; i++) {
-//			id = incrementarId();
-//			codigoError = agregarPasajero(arr, len, id, nombres[i], apellidos[i], precios[i], tipoPasajeros[i], codigoVuelos[i], estadoVuelos[i]);
-//			if (codigoError == -1) {
-//				codigoError = -1;
-//				break;
-//			}
-//			codigoError = 0;
-//		}
-//	}
-//
-//	return codigoError;
-//}
+int hacerCargaForzadaCensista(Censista arr[], int len) {
+	int codigoError;
+	int id;
+	int edad;
+	char nombres[][51] = {"Malvina", "Martin", "Mariana", "Pedro", "Juan", "Nicolas", "Andrea", "Carlos", "Lucas", "Maximiliano", "Hector", "Jesica", "Gabriel", "Horacio", "Oscar"};
+	char apellidos[][51] = {"Sainz", "Godirio", "Valenzuela", "Acosta", "Lopez","Caruso", "Bollati", "Vitola", "Calvo", "Biglia", "Thomas", "Paulovies", "Marino", "Bollati", "Chananpa"};
+	int dias[] = {25, 12, 5, 29, 7, 17, 23, 2, 9, 23, 20, 5, 1, 11, 18};
+	int meses[] = {2, 5, 1, 8, 7, 12, 10, 2, 9, 5, 3, 5, 2, 11, 8};
+	int anios[] = {2001, 1992, 1980, 1996, 1994, 2000, 1978, 1985, 1997, 1980, 1987, 1995, 1998, 1983, 1975};
+	char nombresCalles[][51] = {"Azcuenaga", "Pedernera", "San Lorenzo", "Achaval", "Aguapey", "Aguilar", "Alzaga", "Alvear", "Suipacha", "Las Piedras", "Centenario", "9 de julio", "Parana", "Godoy Cruz", "Moreno"};
+	int numerosCalles[] = {2553, 1500, 2768, 1200, 1250, 3214, 3200, 1500, 1250, 976, 2556, 1300, 1700, 1800, 1987};
+	int zonas[] = {11, 12, 13, 14, 15, 16, 16, 12, 11, 15, 12, 13, 13, 14, 14};
+
+	codigoError = -1;
+
+	if (arr != NULL && len > 0) {
+		for(int i = 0; i < 15; i++) {
+			id = incrementarCensistaId();
+			edad = 2022 - anios[i];
+			codigoError = agregarCensista(arr, len, id, nombres[i], apellidos[i], dias[i], meses[i], anios[i], edad, nombresCalles[i], numerosCalles[i]);
+			arr[i].idZona = zonas[i];
+			arr[i].estadoCensista = 0;
+			if (codigoError == -1) {
+				codigoError = -1;
+				break;
+			}
+			codigoError = 0;
+		}
+
+	}
+
+	return codigoError;
+}
 
 
 

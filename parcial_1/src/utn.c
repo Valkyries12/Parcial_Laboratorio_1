@@ -37,6 +37,8 @@ int utn_getInt(int * pNumeroIngresado, char * mensaje, char * mensajeError, int 
 					codigoError = 0;
 					break;
 
+				}else{
+					printf("%s", mensajeError);
 				}
 //				fflush(stdin);
 			} else{

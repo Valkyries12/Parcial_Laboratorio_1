@@ -20,10 +20,13 @@
 
 int inicializarLocalidades(Localidad arr[], int len) {
 	int codigoError;
+	char localidades[][51] = {"Bandfield", "Lanús", "Escalada", "Temperley", "Gerli", "Avellaneda"};
 
 	codigoError = -1;
 	if(arr != NULL && len > 0) {
 		for(int i = 0; i < len; i++) {
+			arr[i].id = incrementarLocalidadId();
+			strncpy(arr[i].nombreLocalidad, localidades[i], strlen(localidades[i]));
 			arr[i].isEmpty = 1;
 		}
 		codigoError = 0;
@@ -70,32 +73,27 @@ int buscarLocalidadPorId(Localidad arr[], int id, int len) {
 
 
 
-//int agregarPasajero(Pasajero arr[], int len, int id, char * nombre, char * apellido, float precio, int tipoPasajero, char * codigoVuelo, int estadoVuelo ) {
-//	int codigoError;
-//	int indice;
-//
-//	codigoError = -1;
-//	if (arr != NULL && len > 0 && id > 0 && nombre != NULL && apellido != NULL && precio > 0 && tipoPasajero >= 0 && codigoVuelo != NULL && estadoVuelo >= 0) {
-//		indice = buscarEspacioLibre(arr, len);
-//		if (indice != -1) {
-//
-//			arr[indice].id = id;
-//			strncpy(arr[indice].nombre, nombre, strlen(nombre));
-//			strncpy(arr[indice].apellido, apellido, strlen(apellido));
-//			arr[indice].precio = precio;
-//			arr[indice].tipoPasajero = tipoPasajero;
-//			strncpy(arr[indice].codigoVuelo, codigoVuelo, strlen(codigoVuelo));
-//			arr[indice].estadoVuelo = estadoVuelo;
-//			arr[indice].isEmpty = FALSE;
-//			codigoError = 0;
-//		} else {
-//			puts("\n\nNo se pueden agregar más pasajeros");
-//		}
-//	}
-//
-//
-//	return codigoError;
-//}
+int agregarLocalidad(Localidad arr[], int len, int id, char * nombre) {
+	int codigoError;
+	int indice;
+
+	codigoError = -1;
+	if (arr != NULL && len > 0 && id >= 0 && nombre != NULL) {
+		indice = buscarEspacioLibreLocalidad(arr, len);
+		if (indice != -1) {
+
+			arr[indice].id = id;
+			strncpy(arr[indice].nombreLocalidad, nombre, strlen(nombre));
+			arr[indice].isEmpty = FALSE;
+			codigoError = 0;
+		} else {
+			puts("\n\nNo se pueden agregar más localidades");
+		}
+	}
+
+
+	return codigoError;
+}
 
 
 
@@ -192,7 +190,7 @@ int existeLocalidad(Localidad arr[], int len, int id) {
 
 
 int incrementarLocalidadId(void) {
-	static int id = 150;
+	static int id = -1;
 	id++;
 
 	return id;
@@ -355,31 +353,29 @@ int incrementarLocalidadId(void) {
 
 
 
-//int hacerCargaForzada(Pasajero arr[], int len) {
-//	int codigoError;
-//	int id;
-//	char nombres[][51] = {"Malvina", "Martin", "Mariana", "Pedro", "Juan", "Nicolas", "Andrea", "Carlos", "Lucas", "Maximiliano", "Hector", "Jesica", "Gabriel", "Horacio", "Oscar"};
-//	char apellidos[][51] = {"Sainz", "Godirio", "Valenzuela", "Acosta", "Lopez","Caruso", "Bollati", "Vitola", "Calvo", "Biglia", "Thomas", "Paulovies", "Marino", "Bollati", "Chananpa"};
-//	float precios[] = {4500, 45000, 72345, 25000, 13200, 6500, 7200, 30255, 7900, 17456, 56789, 25400, 9800, 27890, 15600};
-//	int tipoPasajeros[] = {1, 0, 1, 2 ,0, 1, 2, 0, 0, 1, 2, 0, 1, 1, 2};
-//	char codigoVuelos[][10] = {"FGHQWE", "TYUQWE", "POILKJ", "FGHVBN", "YUIJKL","ARARAR", "QWEASD", "ASDQWE", "ZXCVBN", "QWERTY", "TYUGHJ", "TYUQWE", "ASDFGH", "UIOPJK", "QWEASD"};
-//	int estadoVuelos[] = {1, 2, 2, 0, 1, 0, 2, 1, 1, 1, 2, 0, 0, 2, 1};
-//	codigoError = -1;
-//
-//	if (arr != NULL) {
-//		for(int i = 0; i < 15; i++) {
-//			id = incrementarId();
-//			codigoError = agregarPasajero(arr, len, id, nombres[i], apellidos[i], precios[i], tipoPasajeros[i], codigoVuelos[i], estadoVuelos[i]);
-//			if (codigoError == -1) {
-//				codigoError = -1;
-//				break;
-//			}
-//			codigoError = 0;
-//		}
-//	}
-//
-//	return codigoError;
-//}
+int hacerCargaForzadaLocalidad(Localidad arr[], int len) {
+	int codigoError;
+	int id;
+
+	char nombresLocalidades[][51] = {"Bandfield", "Lanús", "Escalada", "Temperley", "Gerli", "Avellaneda"};
+
+
+	codigoError = -1;
+
+	if (arr != NULL && len > 0) {
+		for(int i = 0; i < 6; i++) {
+				id = incrementarLocalidadId();
+				codigoError = agregarLocalidad(arr, len, id, nombresLocalidades[i]);
+				if (codigoError == -1) {
+					codigoError = -1;
+					break;
+				}
+				codigoError = 0;
+		}
+	}
+
+	return codigoError;
+}
 
 
 

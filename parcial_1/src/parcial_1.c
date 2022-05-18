@@ -22,6 +22,7 @@
 #define FALSE 0
 #define CANTIDAD_CENSISTAS 200
 #define CANTIDAD_ZONAS 6
+#define CANTIDAD_LOCALIDADES 6
 
 int main(void) {
 	Censista censistas[CANTIDAD_CENSISTAS];
@@ -47,6 +48,8 @@ int main(void) {
 	int localidad;
 	int codigoError;
 	int opcionMenu;
+	int indice;
+	int zonaAsignada;
 
 	setbuf(stdout, NULL);
 	puts("=== INICIO DEL PROGRAMA ===");
@@ -54,10 +57,20 @@ int main(void) {
 	inicializarZonas(zonas, CANTIDAD_ZONAS);
 
 	do {
-		codigoError = utn_getInt(&opcionMenu, "\n1- Cargar censista. \n2- Modificar censista. \n3- Eliminar censista. \n4- Cargar zona. \n5- Asignar zona a censar. \n6- Carga de datos. \n7- Mostrar censistas. \n8- Mostrar zonas. \n9- Salir. \n\nIngrese una opción: ", "\nOpción inválida. Reintente.\n", 9, 1, 3);
+		codigoError = utn_getInt(&opcionMenu, "\n0- Carga forzada. \n1- Cargar censista. \n2- Modificar censista. \n3- Eliminar censista. \n4- Cargar zona. \n5- Asignar zona a censar. \n6- Carga de datos. \n7- Mostrar censistas. \n8- Mostrar zonas. \n9- Salir. \n\nIngrese una opción: ", "\nOpción inválida. Reintente.\n", 9, 0, 3);
 
 		if (codigoError == 0) {
 			switch (opcionMenu) {
+				case 0:
+					puts("\n=== CARGA FORZADA ===\n");
+					codigoError = hacerCargaForzadaCensista(censistas, CANTIDAD_CENSISTAS);
+					if (codigoError == 0) {
+						codigoError = hacerCargaForzadaZona(zonas, CANTIDAD_ZONAS);
+
+					}
+
+					utn_imprimirMensajes(codigoError, "\nSe ha hecho la carga forzada satisfactoriamente.\n", "\nHa ocurrido un error al hacer la carga forzada.\n");
+				break;
 				case 1:
 					puts("\n=== CARGA DEL CENSISTA ===\n");
 					codigoError = utn_getString(nombreCensista, "\nIngrese el nombre del censista: ", "\nError. Debe contener sólo letras y tener entre 4 y 15 caractéres.\n", 3, 4, 15);
@@ -123,6 +136,27 @@ int main(void) {
 					break;
 				case 5:
 					puts("\n=== ASIGNAR ZONA A CENSAR ===\n");
+
+					if (hayZonaCargada(zonas, CANTIDAD_ZONAS) && hayCensistaCargado(censistas, CANTIDAD_CENSISTAS)) {
+
+						codigoError = utn_getInt(&id, "\nIngrese el ID del censista para asignarle una zona: ", "\nError. Sólo se permiten números del 150 al 999.\n", 999, 150, 3);
+						if (codigoError == 0 && existeCensista(censistas, CANTIDAD_CENSISTAS, id)) {
+							indice = buscarCensistaPorId(censistas, id, CANTIDAD_CENSISTAS);
+							imprimirCabeceraCensista();
+							imprimirCensista(censistas[indice]);
+							codigoError = utn_getInt(&zonaAsignada, "\n\nIngrese la zona a asignar [11,12,13,14,15,16]: ", "\nOpción inválida. Solo se permite del 11 al 16.\n", 16, 11, 3);
+
+						} else {
+							puts("\nEl ID ingresado es inexistente.\n");
+						}
+						if (codigoError == 0) {
+							censistas[indice].idZona = zonaAsignada;
+							censistas[indice].estadoCensista = 0;
+						}
+						utn_imprimirMensajes(codigoError, "\nSe ha asignado una zona al censita satisfactoriamente.\n", "\nHa ocurrido un error al asignar zona al censista.\n");
+					} else {
+						puts("\nDebe haber al menos una zona y un censista cargados.\n");
+					}
 					break;
 				case 6:
 					puts("\n=== CARGA DE DATOS ===\n");

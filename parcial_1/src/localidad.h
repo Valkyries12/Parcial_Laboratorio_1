@@ -10,7 +10,7 @@
 
 typedef struct {
 	int id;
-	char nombreLocalidad[20][51];
+	char nombreLocalidad[51];
 	int isEmpty;
 }Localidad;
 
@@ -43,19 +43,14 @@ int buscarEspacioLibreLocalidad(Localidad arr[], int len);
 int buscarLocalidadPorId(Localidad arr[], int id, int len);
 
 
-///// @brief Carga una localidad al array en el primer indice disponible
-/////
-///// @param arr -> array de localidades
-///// @param len -> longitud del array
-///// @param id -> id autoincremental
-///// @param nombre -> nombre de la localidad
-///// @param apellido -> apellido del pasajero
-///// @param precio -> precio del vuelo
-///// @param tipoPasajero -> PRIMERA_CLASE (0), EJECUTIVO (1), PREMIUM (2)
-///// @param codigoVuelo -> valor alfanumerico
-///// @param estadoVuelo -> ACTIVO (0), DEMORADO (1), CANCELADO (2)
-///// @return En caso de exito (0), en caso de error (-1)
-//int agregarPasajero(Pasajero arr[], int len, int id, char * nombre, char * apellido, float precio, int tipoPasajero, char * codigoVuelo, int estadoVuelo );
+/// @brief Carga una localidad al array en el primer indice disponible
+///
+/// @param arr -> array de localidades
+/// @param len -> longitud del array
+/// @param id -> id autoincremental
+/// @param nombre -> nombre de la localidad
+/// @return En caso de exito (0), en caso de error (-1)
+int agregarLocalidad(Localidad arr[], int len, int id, char * nombre);
 
 
 /// @brief Elimina una localidad del array
@@ -138,12 +133,12 @@ int incrementarLocalidadId(void);
 //int ordenarPasajerosPorCodigo(Pasajero arr[], int len, int orden);
 
 
-///// @brief Carga 10 usuarios
-/////
-///// @param arr -> array de pasajeros
-///// @param len -> longitud del array
-///// @return En caso de exito (0), en caso de error (-1)
-//int hacerCargaForzada(Pasajero arr[], int len);
+/// @brief Carga 6 localidades
+///
+/// @param arr -> array de localidades
+/// @param len -> longitud del array
+/// @return En caso de exito (0), en caso de error (-1)
+int hacerCargaForzadaLocalidad(Localidad arr[], int len);
 
 
 ///// @brief Imprime la cabecera de la tabla de pasajeros

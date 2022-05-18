@@ -8,11 +8,12 @@
 #ifndef ZONA_H_
 #define ZONA_H_
 
+
 typedef struct {
 	int id;
 	char calles[4][51];
-	int estadoZona;
-	int idLocalidad;
+//	int estadoZona;
+	int localidad;
 	int isEmpty;
 }Zona;
 
@@ -51,9 +52,9 @@ int buscarZonaPorId(Zona arr[], int id, int len);
 /// @param len -> longitud del array
 /// @param id -> id autoincremental
 /// @param calles -> array con 4 nombres de calles
-/// @param idLocalidad -> localidad
+/// @param localidad -> localidad
 /// @return En caso de exito (0), en caso de error (-1)
-int agregarZona(Zona arr[], int len, int id, char calles[][51], int idLocalidad);
+int agregarZona(Zona arr[], int len, int id, char calles[][51], int localidad);
 
 
 /// @brief Elimina una zona del array
@@ -136,12 +137,12 @@ void imprimirZonas(Zona arr[], int len);
 //int ordenarPasajerosPorCodigo(Pasajero arr[], int len, int orden);
 
 
-///// @brief Carga 10 usuarios
-/////
-///// @param arr -> array de pasajeros
-///// @param len -> longitud del array
-///// @return En caso de exito (0), en caso de error (-1)
-//int hacerCargaForzada(Pasajero arr[], int len);
+/// @brief Carga 6 zonas
+///
+/// @param arr -> array de zonas
+/// @param len -> longitud del array
+/// @return En caso de exito (0), en caso de error (-1)
+int hacerCargaForzadaZona(Zona arr[], int len);
 
 
 /// @brief Imprime la cabecera de la tabla de zonas

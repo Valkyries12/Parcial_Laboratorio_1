@@ -149,12 +149,12 @@ void imprimirCensistas(Censista arr[], int len);
 //int ordenarPasajerosPorCodigo(Pasajero arr[], int len, int orden);
 
 
-///// @brief Carga 10 usuarios
-/////
-///// @param arr -> array de pasajeros
-///// @param len -> longitud del array
-///// @return En caso de exito (0), en caso de error (-1)
-//int hacerCargaForzada(Pasajero arr[], int len);
+/// @brief Carga 15 censistas
+///
+/// @param arr -> array de censistas
+/// @param len -> longitud del array
+/// @return En caso de exito (0), en caso de error (-1)
+int hacerCargaForzadaCensista(Censista arr[], int len);
 
 
 /// @brief Imprime la cabecera de la tabla de censistas
