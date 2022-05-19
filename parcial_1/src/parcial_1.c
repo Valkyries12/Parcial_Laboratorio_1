@@ -38,6 +38,8 @@ int main(void) {
 	int mes;
 	int anio;
 	int edad;
+	int cantidadVirtual;
+	int cantidadAusente;
 //	int estadoCensista;
 	char nombreCalle[51];
 	int numeroCalle;
@@ -227,12 +229,14 @@ int main(void) {
 							indice = buscarCensistaPorId(censistas, id, CANTIDAD_CENSISTAS);
 							imprimirCabeceraCensista();
 							imprimirCensista(censistas[indice]);
+							//cambiar por lapropiedad directa
 							codigoError = utn_getInt(&zonaAsignada, "\n\nIngrese la zona a asignar [11,12,13,14,15,16]: ", "\nOpción inválida. Solo se permite del 11 al 16.\n", 16, 11, 3);
 
 						} else {
 							puts("\nEl ID ingresado es inexistente.\n");
 						}
 						if (codigoError == 0) {
+							//refactoizar con asignarZona()
 							censistas[indice].idZona = zonaAsignada;
 							censistas[indice].estadoCensista = 0;
 						}
@@ -243,6 +247,31 @@ int main(void) {
 					break;
 				case 6:
 					puts("\n=== CARGA DE DATOS ===\n");
+					//hay censistasAsignados HACER
+					if (hayCensistaCargado(censistas, CANTIDAD_CENSISTAS) && hayZonaCargada(zonas, CANTIDAD_ZONAS)) {
+						codigoError = utn_getInt(&id, "\nIngrese el ID del censista para la carga de datos: ", "\nError. Sólo debe haber números del 150 al 999.\n", 999, 150, 3);
+						if (codigoError == 0 && existeCensista(censistas, CANTIDAD_CENSISTAS, id)) {
+							indice = buscarCensistaPorId(censistas, id, CANTIDAD_CENSISTAS);
+							imprimirCabeceraCensista();
+							imprimirCensista(censistas[indice]);
+
+							codigoError = utn_getInt(&cantidadVirtual, "\nIngrese cantidad de censados virtuales: ", "\nError. Sólo se permiten números del 0 al 999.\n", 999, 0, 3);
+							if (codigoError == 0) {
+								codigoError = utn_getInt(&cantidadAusente, "\nIngrese la cantidad de ausentes: ", "\nError. Sólo se permiten números.\n", 999, 0, 3);
+
+								if (codigoError == 0) {
+									int indiceZona = buscarZonaPorId(zonas, censistas[indice].idZona, CANTIDAD_ZONAS);
+									int idZona = zonas[indiceZona].id;
+
+									codigoError = cargarDatos(zonas, idZona, CANTIDAD_ZONAS, cantidadVirtual, cantidadAusente);
+								}
+							}
+
+							utn_imprimirMensajes(codigoError, "\nSe han cargado los datos satisfactoriamente.\n", "\nHa sucedido un error al cargar los datos\n");
+						}
+					} else {
+						puts("\nDebe haber al menos una zona y un censista cargado.\n");
+					}
 					break;
 				case 7:
 					puts("\n=== MOSTRAR CENSISTAS ===\n");

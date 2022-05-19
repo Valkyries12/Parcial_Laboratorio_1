@@ -109,6 +109,7 @@ int cargarDatos(Zona arr[], int id, int len, int cantidadVirtual, int cantidadAu
 		indice = buscarZonaPorId(arr, id, len);
 
 		if (indice != -1) {
+
 			arr[indice].cantidadAusente = cantidadAusente;
 			arr[indice].cantidadVirtual = cantidadVirtual;
 			codigoError = 0;
