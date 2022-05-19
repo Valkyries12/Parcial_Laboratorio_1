@@ -181,6 +181,23 @@ int main(void) {
 										break;
 									case 5:
 										puts("\n=== MODIFICAR DIRECCIÓN ===\n");
+
+										do {
+											codigoError = utn_getInt(&opcionMenu, "\n1- Modificar nombre de calle. \n2- Modificar número de domicilio. \n3- Atras. \n\nIngrese una opción: ", "\nOpción inválida. Reintente.\n", 3, 1, 3);
+
+											switch (opcionMenu) {
+												case 1:
+													codigoError = utn_getString(censistas[indice].direccion.calle, "\nIngrese la nueva calle: ", "\nError. Sólo debe contener solo letras y estar entre 4 y 50 caractéres.\n", 3, 4, 50);
+													utn_imprimirMensajes(codigoError, "\nSe ha modificado el nombre de calle satisfactoriamente.\n", "\nHa ocurrido un error al modificar el nombre de calle.\n");
+													break;
+												case 2:
+													codigoError = utn_getInt(&censistas[indice].direccion.numero, "\nIngrese el nuevo número de domicilio: ", "\nDebe contener sólo números y estar entre 1 y 3500\n", 3500, 1, 3);
+													utn_imprimirMensajes(codigoError, "\nSe ha modificado el número de domicilio satisfactoriamente.\n", "\nHa ocurrido un error al modificar el número de domicilio.\n");
+													break;
+												default:
+													break;
+											}
+										} while(opcionMenu != 3 && codigoError == 0);
 										break;
 									default:
 										break;
