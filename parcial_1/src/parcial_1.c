@@ -40,10 +40,8 @@ int main(void) {
 	int edad;
 	int cantidadVirtual;
 	int cantidadAusente;
-//	int estadoCensista;
 	char nombreCalle[51];
 	int numeroCalle;
-//	int idZona;
 
 
 	char calles[4][51];
@@ -134,15 +132,20 @@ int main(void) {
 							imprimirCensista(censistas[indice]);
 							//me quede aca tengo que hacer el modificar
 							do {
-								codigoError = utn_getInt(&opcionMenu, "\n1- Modificar nombre. \n2- Modificar apellido. \n3- Modificar fecha de nacimiento. \n4- Modificar estado del censista. \n5- Modificar dirección. \n6- Salir. \n\nIngrese una opción: ", "\nOpción inválida. Solo se permite del 1 al 6.\n", 6, 1, 3);
+								codigoError = utn_getInt(&opcionMenu, "\n1- Modificar nombre. \n2- Modificar apellido. \n3- Modificar fecha de nacimiento. \n4- Modificar estado del censista. \n5- Modificar dirección. \n6- Atras. \n\nIngrese una opción: ", "\nOpción inválida. Solo se permite del 1 al 6.\n", 6, 1, 3);
 
 								switch (opcionMenu) {
 									case 1:
 										puts("\n=== MODIFICAR NOMBRE ===\n");
 
+										codigoError = utn_getString(censistas[indice].nombre, "\nIngrese el nuevo nombre: ", "\nError. Debe contener sólo letras y tener entre 4 y 50 caractéres.\n", 3, 4, 51);
+										utn_imprimirMensajes(codigoError, "\nSe ha modificado el nombre satisfactoriamente.\n", "\nHa ocurrido un error al modificar el nombre.\n");
 										break;
 									case 2:
 										puts("\n=== MODIFICAR APELLIDO ===\n");
+
+										codigoError = utn_getString(censistas[indice].apellido, "\nIngrese el nuevo apellido: ", "\nError. Debe contener sólo letras y tener entre 4 y 50 caractéres.\n", 3, 4, 51);
+										utn_imprimirMensajes(codigoError, "\nSe ha modificado el apellido satisfactoriamente.\n", "\nHa ocurrido un error al modificar el apellido.\n");
 										break;
 									case 3:
 										puts("\n=== MODIFICAR FECHA DE NACIMIENTO ===\n");
@@ -175,20 +178,6 @@ int main(void) {
 							indice = buscarCensistaPorId(censistas, id, CANTIDAD_CENSISTAS);
 							imprimirCabeceraCensista();
 							imprimirCensista(censistas[indice]);
-
-//							do {
-//								codigoError = utn_getString(&opcionMenuChar, "\n¿Está seguro de eliminar al censista?. [s/n]: ", "\nOpción inválida. Solo se permite s/n.\n", 3, 1, 1);
-//								if (opcionMenuChar != 'n' || opcionMenuChar != 's') {
-//									puts("\nSolo está permitido s/n.\n");
-//								}
-//							} while(opcionMenuChar != 'n' || opcionMenuChar != 's');
-
-
-//							if (codigoError == 0) {
-//								if (opcionMenuChar == 's') {
-//									codigoError = eliminarCensista(censistas, id, CANTIDAD_CENSISTAS);
-//								}
-//							}
 							codigoError = eliminarCensista(censistas, id, CANTIDAD_CENSISTAS);
 
 							utn_imprimirMensajes(codigoError, "\nSe ha eliminado al censista satisfactoriamente.\n", "\nHa ocurrido un error al eliminar al censista.\n");
@@ -264,6 +253,7 @@ int main(void) {
 									int idZona = zonas[indiceZona].id;
 
 									codigoError = cargarDatos(zonas, idZona, CANTIDAD_ZONAS, cantidadVirtual, cantidadAusente);
+
 								}
 							}
 

@@ -395,7 +395,7 @@ int hacerCargaForzadaCensista(Censista arr[], int len) {
 			edad = 2022 - anios[i];
 			codigoError = agregarCensista(arr, len, id, nombres[i], apellidos[i], dias[i], meses[i], anios[i], edad, nombresCalles[i], numerosCalles[i]);
 			arr[i].idZona = zonas[i];
-			arr[i].estadoCensista = 0;
+			arr[i].estadoCensista = 2;
 			if (codigoError == -1) {
 				codigoError = -1;
 				break;
