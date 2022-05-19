@@ -75,6 +75,24 @@ int buscarCensistaPorId(Censista arr[], int id, int len) {
 
 
 
+int buscarCensistaConZonaMasCensada(Censista arr[], int idZona, int len) {
+	int indice;
+
+	if (arr != NULL && idZona > 0 && len > 0) {
+		for(int i = 0; i < len; i++) {
+			if (arr[i].idZona == idZona) {
+				indice = i;
+				break;
+			}
+		}
+	}
+
+	return indice;
+}
+
+
+
+
 int agregarCensista(Censista arr[], int len, int id, char * nombre, char * apellido, int dia, int mes, int anio, int edad, char * nombreCalle, int numeroCalle) {
 	int codigoError;
 	int indice;
@@ -291,57 +309,57 @@ void imprimirCensistas(Censista arr[], int len) {
 
 
 
-//int ordenarPasajeros(Pasajero arr[], int len, int orden) {
-//	int codigoError;
-//	int estaOrdenado;
-//
-//	Pasajero auxPasajero;
-//
-//
-//	codigoError = -1;
-//	if (arr != NULL && len > 0 && (orden == 2 || orden == 1)) {
-//		do {
-//			estaOrdenado = TRUE;
-//			len--;
-//			switch (orden) {
-//				case 1:
-//					//ordeno de forma ascendente
-//					for (int i = 0; i < len; i++) {
-//
-//						if (strcmp(arr[i].apellido, arr[i + 1].apellido) > 0) {
-//							if (arr[i].tipoPasajero > arr[i + 1].tipoPasajero) {
-//								auxPasajero = arr[i];
-//								arr[i] = arr[i + 1];
-//								arr[i + 1] = auxPasajero;
-//								estaOrdenado = FALSE;
-//							}
-//
-//						}
-//					}
-//					break;
-//				case 2:
-//					//ordeno de forma descendente
-//					for (int i = 0; i < len; i++) {
-//						if (strcmp( arr[i + 1].apellido, arr[i].apellido) > 0) {
-//							if (arr[i].tipoPasajero < arr[i + 1].tipoPasajero) {
-//								auxPasajero = arr[i];
-//								arr[i] = arr[i + 1];
-//								arr[i + 1] = auxPasajero;
-//								estaOrdenado = FALSE;
-//							}
-//
-//						}
-//					}
-//					break;
-//				default:
-//					break;
-//			}
-//		} while (estaOrdenado == FALSE);
-//		codigoError = 0;
-//	}
-//
-//	return codigoError;
-//}
+int ordenarCensistas(Censista arr[], int len, int orden) {
+	int codigoError;
+	int estaOrdenado;
+
+	Censista auxCensista;
+
+
+	codigoError = -1;
+	if (arr != NULL && len > 0 && (orden == 2 || orden == 1)) {
+		do {
+			estaOrdenado = TRUE;
+			len--;
+			switch (orden) {
+				case 1:
+					//ordeno de forma ascendente
+					for (int i = 0; i < len; i++) {
+
+						if (strcmp(arr[i].apellido, arr[i + 1].apellido) > 0) {
+							if (arr[i].nombre > arr[i + 1].nombre) {
+								auxCensista = arr[i];
+								arr[i] = arr[i + 1];
+								arr[i + 1] = auxCensista;
+								estaOrdenado = FALSE;
+							}
+
+						}
+					}
+					break;
+				case 2:
+					//ordeno de forma descendente
+					for (int i = 0; i < len; i++) {
+						if (strcmp( arr[i + 1].apellido, arr[i].apellido) > 0) {
+							if (arr[i].nombre < arr[i + 1].nombre) {
+								auxCensista = arr[i];
+								arr[i] = arr[i + 1];
+								arr[i + 1] = auxCensista;
+								estaOrdenado = FALSE;
+							}
+
+						}
+					}
+					break;
+				default:
+					break;
+			}
+		} while (estaOrdenado == FALSE);
+		codigoError = 0;
+	}
+
+	return codigoError;
+}
 
 
 

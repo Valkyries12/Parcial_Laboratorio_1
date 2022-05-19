@@ -118,6 +118,32 @@ int agregarZona(Zona arr[], int len, int id, char calles[][51], int localidad) {
 }
 
 
+
+int obtenerLocalidadConMasAusentes(Zona arr[], int len, int * localidadMasAusentes) {
+	int codigoError;
+	int maxAusentes;
+	char localidadMaxAusentes;
+
+	maxAusentes = arr[0].cantidadAusente;
+	localidadMaxAusentes = arr[0].localidad;
+
+	codigoError = -1;
+	if (arr != NULL && len > 0 && localidadMasAusentes != NULL) {
+		for(int i = 1; i < len; i++) {
+			if (arr[i].cantidadAusente > maxAusentes) {
+				maxAusentes = arr[i].cantidadAusente;
+				localidadMaxAusentes = arr[i].localidad;
+			}
+		}
+		* localidadMasAusentes = localidadMaxAusentes;
+		codigoError = 0;
+	}
+
+	return codigoError;
+}
+
+
+
 int cargarDatos(Zona arr[], int id, int len, int cantidadVirtual, int cantidadAusente) {
 	int codigoError;
 	int indice;
@@ -236,6 +262,30 @@ int incrementarZonaId(void) {
 	id++;
 
 	return id;
+}
+
+
+int calcularZonaMasCensada(Zona arr[], int len, int * zonaMasCensada) {
+	int codigoError;
+	int maxZonaCensada;
+	int maxCantidadCensados;
+
+	maxZonaCensada = arr[0].id;
+	maxCantidadCensados = arr[0].cantidadVirtual;
+
+	codigoError = -1;
+	if (arr != NULL && len > 0 && zonaMasCensada != NULL) {
+		for(int i = 1; i < len; i++) {
+			if (arr[i].cantidadVirtual > maxCantidadCensados) {
+				maxCantidadCensados = arr[i].cantidadVirtual;
+				maxZonaCensada = arr[i].id;
+			}
+		}
+		* zonaMasCensada = maxZonaCensada;
+		codigoError = 0;
+	}
+
+	return codigoError;
 }
 
 

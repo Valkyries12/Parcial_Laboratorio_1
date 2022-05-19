@@ -52,6 +52,14 @@ int buscarEspacioLibreCensista(Censista arr[], int len);
 int buscarCensistaPorId(Censista arr[], int id, int len);
 
 
+/// @brief Devuelve el indice del censista con la zona mas censada
+///
+/// @param arr -> array de censistas
+/// @param idZona -> id de la zona mas censada
+/// @param len -> longitud del array
+int buscarCensistaConZonaMasCensada(Censista arr[], int idZona, int len);
+
+
 /// @brief Carga un censista al array en el primer indice disponible
 ///
 /// @param arr -> array de censistas
@@ -139,13 +147,14 @@ void imprimirCensistas(Censista arr[], int len);
 //void imprimirPasajerosPorEstado(Pasajero arr[], int len, int estado);
 
 
-///// @brief Ordena los pasajeros por apellido y tipo de pasajero
-/////
-///// @param arr -> array de pasajeros
-///// @param len -> longitud del array
-///// @param orden -> 1 ascendente, 2 descendente
-///// @return En caso de exito (0), en caso de error (-1)
-//int ordenarPasajeros(Pasajero arr[], int len, int orden);
+/// @brief Ordena los censistas por apellido y nombre
+///
+/// @param arr -> array de censistas
+/// @param len -> longitud del array
+/// @param orden -> 1 ascendente, 2 descendente
+/// @return En caso de exito (0), en caso de error (-1)
+int ordenarCensistas(Censista arr[], int len, int orden);
+
 
 
 ///// @brief Ordenar los pasajeros por codigo de vuelo y estado ACTIVO

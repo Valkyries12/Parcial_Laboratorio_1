@@ -60,6 +60,15 @@ int buscarZonaPorIdHardcode(Zona arr[], int id, int len);
 
 
 
+/// @brief Me dice el nombre de  la localidad con mas uasentes
+///
+/// @param arr -> array de Zonas
+/// @param len -> longitud del array
+/// @param localidadMasAusentes -> puntero donde se guardara el resultado
+/// @return en caso de error (-1), en caso de exito (0)
+int obtenerLocalidadConMasAusentes(Zona arr[], int len, int * localidadMasAusentes);
+
+
 /// @brief Carga una zona al array en el primer indice disponible
 ///
 /// @param arr -> array de zonas
@@ -120,6 +129,14 @@ int existeZona(Zona arr[], int len, int id);
 /// @brief Incrementa el id por uno, lo hace autoincremental
 ///
 int incrementarZonaId(void);
+
+
+/// @brief Calcula la zona mas censada
+///
+/// @param arr -> array de zonas
+/// @param len -> longitud del array
+/// @param zonaMasCensada -> Puntero con el resultado
+int calcularZonaMasCensada(Zona arr[], int len, int * zonaMasCensada);
 
 
 /// @brief Imprime los datos de la zona dada

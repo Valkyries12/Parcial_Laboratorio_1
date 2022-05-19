@@ -39,18 +39,18 @@ int main(void) {
 	int cantidadAusente;
 	char nombreCalle[51];
 	int numeroCalle;
+	int localidadConMasAusentes;
+	char localidades[][51] = {"Bandfield", "Lanús", "Escalada", "Temperley", "Gerli", "Avellaneda"};
 
 
 	char calles[4][51];
 	int localidad;
 	int codigoError;
 	int opcionMenu;
-//	char opcionMenuChar;
 	int indice;
-	int zonaAsignada;
-//	int hayCargaForzada;
+	int zonaMasCensada;
+//	int zonaAsignada;
 
-//	hayCargaForzada = FALSE;
 
 	setbuf(stdout, NULL);
 	puts("=== INICIO DEL PROGRAMA ===");
@@ -58,7 +58,7 @@ int main(void) {
 	inicializarZonas(zonas, CANTIDAD_ZONAS);
 
 	do {
-		codigoError = utn_getInt(&opcionMenu, "\n0- Carga forzada. \n1- Cargar censista. \n2- Modificar censista. \n3- Eliminar censista. \n4- Cargar zona. \n5- Asignar zona a censar. \n6- Carga de datos. \n7- Mostrar censistas. \n8- Mostrar zonas. \n9- Salir. \n\nIngrese una opción: ", "\nOpción inválida. Reintente.\n", 9, 0, 3);
+		codigoError = utn_getInt(&opcionMenu, "\n0- Carga forzada. \n1- Cargar censista. \n2- Modificar censista. \n3- Eliminar censista. \n4- Cargar zona. \n5- Asignar zona a censar. \n6- Carga de datos. \n7- Mostrar censistas. \n8- Mostrar zonas. \n9- Informes. \n10- Salir. \n\nIngrese una opción: ", "\nOpción inválida. Reintente.\n", 9, 0, 3);
 
 		if (codigoError == 0) {
 			switch (opcionMenu) {
@@ -322,11 +322,69 @@ int main(void) {
 						puts("\nDebe haber al menos una zona cargada.\n");
 					}
 					break;
+				case 9:
+					puts("\n=== INFORMES ===\n");
+
+					do {
+						codigoError = utn_getInt(&opcionMenu, "\n1- Cantidad de censistas en estado Activo con zona Pendiente. \n2- listado de censistas ordenados alfabéticamente por apellido y nombre. \n3- Nombre de localidad con más casas ausentes. \n4- Censista cuya zona fue la más censada (total censados presencial y virtual). \n5- Promedio de censos por censista/zona. \n6- Atras. \n\nIngrese una opción: ", "\nOpción inválida. Reintente.\n", 6, 1, 3);
+
+						switch (opcionMenu) {
+							case 1:
+
+								break;
+							case 2:
+								do {
+									codigoError = utn_getInt(&opcionMenu, "\n1- Orden ascendente. \n2. Orden descendente. \n3- Atras. \n\nIngrese una opción: ", "\nOpción inválida. Reintente.\n", 3, 1, 3);
+
+									switch (opcionMenu) {
+										case 1:
+											codigoError = ordenarCensistas(censistas, CANTIDAD_CENSISTAS, 1);
+											if (codigoError == 0) {
+												imprimirCensistas(censistas, CANTIDAD_CENSISTAS);
+											}
+											utn_imprimirMensajes(codigoError,"\nSe han ordenado los censista satisfactoriamente.\n", "\nHa ocurrido un error al ordenar censistas\n");
+											break;
+										case 2:
+											codigoError = ordenarCensistas(censistas, CANTIDAD_CENSISTAS, 2);
+											if (codigoError == 0) {
+												imprimirCensistas(censistas, CANTIDAD_CENSISTAS);
+											}
+											utn_imprimirMensajes(codigoError,"\nSe han ordenado los censista satisfactoriamente.\n", "\nHa ocurrido un error al ordenar censistas\n");
+											break;
+
+										default:
+											break;
+									}
+								} while(opcionMenu != 3 && codigoError == 0);
+								break;
+							case 3:
+								codigoError = obtenerLocalidadConMasAusentes(zonas, CANTIDAD_ZONAS, &localidadConMasAusentes);
+								if (codigoError == 0) {
+									printf("\nLa localidad con mas ausentes es %s\n\n", localidades[localidadConMasAusentes]);
+								}
+								utn_imprimirMensajes(codigoError, "\nSe ha calculado satisfactoriamente.\n", "\nHa ocurrido un error al calcular.\n");
+								break;
+							case 4:
+								codigoError = calcularZonaMasCensada(zonas, CANTIDAD_ZONAS, &zonaMasCensada);
+
+								if (codigoError == 0) {
+									indice = buscarCensistaConZonaMasCensada(censistas, zonaMasCensada, CANTIDAD_CENSISTAS);
+
+									printf("\n%s %s tiene la zona %d y es la más censada.\n\n", censistas[indice].nombre, censistas[indice].apellido, zonaMasCensada);
+
+								}
+								break;
+							default:
+								break;
+						}
+					} while(opcionMenu != 6 && codigoError == 0);
+
+					break;
 				default:
 					break;
 			}
 		}
-	} while(opcionMenu != 9 && codigoError == 0);
+	} while(opcionMenu != 10 && codigoError == 0);
 
 	puts("\nSaliendo...\n");
 	puts("=== FIN DEL PROGRAMA ===");
