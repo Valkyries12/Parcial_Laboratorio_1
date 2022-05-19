@@ -16,7 +16,6 @@
 #include "fechaNacimiento.h"
 #include "direccion.h"
 #include "zona.h"
-#include "localidad.h"
 #include "utn.h"
 
 #define TRUE 1
@@ -27,8 +26,6 @@
 
 int main(void) {
 	Censista censistas[CANTIDAD_CENSISTAS];
-//	FechaNacimiento fechaNacimientos[CANTIDAD_CENSISTAS];
-//	Direccion direcciones[CANTIDAD_CENSISTAS];
 	Zona zonas[CANTIDAD_ZONAS];
 
 	int id;
@@ -321,7 +318,7 @@ int main(void) {
 
 					if (hayZonaCargada(zonas, CANTIDAD_ZONAS)) {
 						imprimirCabeceraZona();
-						imprimirZonas(zonas, CANTIDAD_ZONAS);
+						imprimirZonas(zonas, censistas, CANTIDAD_ZONAS);
 					} else {
 						puts("\nDebe haber al menos una zona cargada.\n");
 					}

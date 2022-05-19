@@ -8,6 +8,7 @@
 #ifndef ZONA_H_
 #define ZONA_H_
 
+#include "censista.h"
 
 typedef struct {
 	int id;
@@ -113,14 +114,16 @@ int incrementarZonaId(void);
 /// @brief Imprime los datos de la zona dada
 ///
 /// @param zona -> struct con los datos de la zona
-void imprimirZona(Zona zona);
+/// @param censista -> struct con los datos del censista
+void imprimirZona(Zona zona, Censista censista);
 
 
 /// @brief Imprime todas las zonas
 ///
-/// @param arr -> array de zonas
+/// @param arrZona -> array de zonas
+/// @param arrCensista -> array de censistas
 /// @param len -> longitud del array
-void imprimirZonas(Zona arr[], int len);
+void imprimirZonas(Zona arrZona[],Censista arrCensista[], int len);
 
 
 ///// @brief Imprime todos los pasajeros

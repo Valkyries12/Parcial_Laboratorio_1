@@ -11,7 +11,6 @@
 
 #include "utn.h"
 #include "zona.h"
-#include "localidad.h"
 
 #define TRUE 1
 #define FALSE 0
@@ -223,13 +222,14 @@ int incrementarZonaId(void) {
 
 
 
-void imprimirZona(Zona zona) {
+void imprimirZona(Zona zona, Censista censista) {
 	if (zona.isEmpty == FALSE) {
 		printf("|%6d", zona.id);
 		printf("|%s %s %s %s", zona.calles[0], zona.calles[1], zona.calles[2], zona.calles[3]);
 		printf("|%10s", estadoZonas[zona.estadoZona]);
 		printf("|%10d", zona.cantidadAusente);
 		printf("|%10d", zona.cantidadVirtual);
+		printf("|%3s %3s|", censista.nombre, censista.apellido);
 		printf("|%20s|\n", localidades[zona.localidad]);
 	}
 }
@@ -242,15 +242,19 @@ void imprimirCabeceraZona(void) {
 		printf("|%10s", "ESTADO");
 		printf("|%10s", "AUSENTE");
 		printf("|%10s", "VIRTUAL");
+		printf("|%20s", "RESPONSABLE");
 		printf("|%20s|\n\n", "LOCALIDAD");
 }
 
 
 
-void imprimirZonas(Zona arr[], int len) {
-	if (arr != NULL) {
+void imprimirZonas(Zona arrZona[], Censista arrCensista[], int len) {
+	if (arrZona != NULL && arrCensista != NULL && len > 0) {
+		int indiceCensista;
 		for(int i = 0; i < len; i++) {
-			imprimirZona(arr[i]);
+
+			indiceCensista = buscarCensistaPorId(arrCensista, arrCensista[i].id, len);
+			imprimirZona(arrZona[i], arrCensista[indiceCensista]);
 		}
 	}
 }
