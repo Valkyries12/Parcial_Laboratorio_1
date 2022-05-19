@@ -30,7 +30,6 @@ int main(void) {
 //	FechaNacimiento fechaNacimientos[CANTIDAD_CENSISTAS];
 //	Direccion direcciones[CANTIDAD_CENSISTAS];
 	Zona zonas[CANTIDAD_ZONAS];
-//	Localidad localidades[][51] = {"Lanús", "Avellaneda", "Gerli", "Remedios de Escalada", "Bandfield", "Lomas de Zamora", "Berazategui", "La Plata", "Glew", "Maximiliano Korn"};
 
 	int id;
 	char nombreCensista[51];
@@ -74,12 +73,13 @@ int main(void) {
 						puts("\nImposible hacer carga forzada si hay algo cargado.\n");
 
 					} else {
-						utn_imprimirMensajes(codigoError, "\nSe ha hecho la carga forzada satisfactoriamente.\n", "\nHa ocurrido un error al hacer la carga forzada.\n");
 						codigoError = hacerCargaForzadaCensista(censistas, CANTIDAD_CENSISTAS);
 						if (codigoError == 0) {
 							codigoError = hacerCargaForzadaZona(zonas, CANTIDAD_ZONAS);
-
+							puts("\nCarga zona ok\n");
 						}
+						utn_imprimirMensajes(codigoError, "\nSe ha hecho la carga forzada satisfactoriamente.\n", "\nHa ocurrido un error al hacer la carga forzada.\n");
+
 					}
 
 				break;
@@ -155,6 +155,8 @@ int main(void) {
 										break;
 								}
 							} while(opcionMenu != 6 && codigoError == 0);
+
+							utn_imprimirMensajes(codigoError, "\nSe ha modificado los datos correctamente.\n", "\nHa ocurrido un error al modificar los datos.\n");
 
 						} else {
 							puts("\nEl ID ingresado es inexistente.\n");

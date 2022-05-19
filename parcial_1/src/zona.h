@@ -12,8 +12,10 @@
 typedef struct {
 	int id;
 	char calles[4][51];
-//	int estadoZona;
+	int estadoZona;
 	int localidad;
+	int cantidadVirtual;
+	int cantidadAusente;
 	int isEmpty;
 }Zona;
 
@@ -55,6 +57,16 @@ int buscarZonaPorId(Zona arr[], int id, int len);
 /// @param localidad -> localidad
 /// @return En caso de exito (0), en caso de error (-1)
 int agregarZona(Zona arr[], int len, int id, char calles[][51], int localidad);
+
+
+/// @brief Carga la cantidad de censados virtuales y ausentes mediante el id de la zona
+///
+/// @param arr -> array de zonas
+/// @param id -> id de la zona a cargar
+/// @param len -> longitud del array
+/// @param cantidadVirtual -> cantidad de censados de forma virtual
+/// @param cantidadAusente -> cantidad de personas ausentes en esa zona
+int cargarDatos(Zona arr[], int id, int len, int cantidadVirtual, int cantidadAusente);
 
 
 /// @brief Elimina una zona del array

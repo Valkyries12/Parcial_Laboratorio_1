@@ -378,19 +378,19 @@ int hacerCargaForzadaCensista(Censista arr[], int len) {
 	int codigoError;
 	int id;
 	int edad;
-	char nombres[][51] = {"Malvina", "Martin", "Mariana", "Pedro", "Juan", "Nicolas", "Andrea", "Carlos", "Lucas", "Maximiliano", "Hector", "Jesica", "Gabriel", "Horacio", "Oscar"};
-	char apellidos[][51] = {"Sainz", "Godirio", "Valenzuela", "Acosta", "Lopez","Caruso", "Bollati", "Vitola", "Calvo", "Biglia", "Thomas", "Paulovies", "Marino", "Bollati", "Chananpa"};
-	int dias[] = {25, 12, 5, 29, 7, 17, 23, 2, 9, 23, 20, 5, 1, 11, 18};
-	int meses[] = {2, 5, 1, 8, 7, 12, 10, 2, 9, 5, 3, 5, 2, 11, 8};
-	int anios[] = {2001, 1992, 1980, 1996, 1994, 2000, 1978, 1985, 1997, 1980, 1987, 1995, 1998, 1983, 1975};
-	char nombresCalles[][51] = {"Azcuenaga", "Pedernera", "San Lorenzo", "Achaval", "Aguapey", "Aguilar", "Alzaga", "Alvear", "Suipacha", "Las Piedras", "Centenario", "9 de julio", "Parana", "Godoy Cruz", "Moreno"};
-	int numerosCalles[] = {2553, 1500, 2768, 1200, 1250, 3214, 3200, 1500, 1250, 976, 2556, 1300, 1700, 1800, 1987};
-	int zonas[] = {11, 12, 13, 14, 15, 16, 16, 12, 11, 15, 12, 13, 13, 14, 14};
+	char nombres[][51] = {"Malvina", "Martin", "Mariana", "Pedro", "Juan", "Nicolas"};
+	char apellidos[][51] = {"Sainz", "Godirio", "Valenzuela", "Acosta", "Lopez","Caruso"};
+	int dias[] = {25, 12, 5, 29, 7, 17};
+	int meses[] = {2, 5, 1, 8, 7, 12};
+	int anios[] = {2001, 1992, 1980, 1996, 1994, 2000};
+	char nombresCalles[][51] = {"Azcuenaga", "Pedernera", "San Lorenzo", "Achaval", "Aguapey", "Aguilar"};
+	int numerosCalles[] = {2553, 1500, 2768, 1200, 1250, 3214};
+	int zonas[] = {11, 12, 13, 14, 15, 16};
 
 	codigoError = -1;
 
 	if (arr != NULL && len > 0) {
-		for(int i = 0; i < 15; i++) {
+		for(int i = 0; i < 6; i++) {
 			id = incrementarCensistaId();
 			edad = 2022 - anios[i];
 			codigoError = agregarCensista(arr, len, id, nombres[i], apellidos[i], dias[i], meses[i], anios[i], edad, nombresCalles[i], numerosCalles[i]);

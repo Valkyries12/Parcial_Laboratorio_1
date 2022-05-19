@@ -17,6 +17,7 @@
 #define FALSE 0
 
 char localidades[][51] = {"Bandfield", "Lanús", "Escalada", "Temperley", "Gerli", "Avellaneda"};
+char estadoZonas[][51] = {"PENDIENTE", "FINALIZADO"};
 
 int inicializarZonas(Zona arr[], int len) {
 	int codigoError;
@@ -70,7 +71,7 @@ int buscarZonaPorId(Zona arr[], int id, int len) {
 
 
 
-int agregarZona(Zona arr[], int len, int id, char calles[4][51], int localidad) {
+int agregarZona(Zona arr[], int len, int id, char calles[][51], int localidad) {
 	int codigoError;
 	int indice;
 
@@ -85,6 +86,7 @@ int agregarZona(Zona arr[], int len, int id, char calles[4][51], int localidad) 
 			strncpy(arr[indice].calles[2], calles[2], strlen(calles[2]));
 			strncpy(arr[indice].calles[3], calles[3], strlen(calles[3]));
 			arr[indice].localidad = localidad;
+			arr[indice].estadoZona = 0;
 			arr[indice].isEmpty = FALSE;
 			codigoError = 0;
 		} else {
@@ -95,6 +97,27 @@ int agregarZona(Zona arr[], int len, int id, char calles[4][51], int localidad) 
 
 	return codigoError;
 }
+
+
+int cargarDatos(Zona arr[], int id, int len, int cantidadVirtual, int cantidadAusente) {
+	int codigoError;
+	int indice;
+
+	codigoError = -1;
+
+	if (arr != NULL && id > 0 && len > 0 && cantidadAusente >= 0 && cantidadAusente >= 0) {
+		indice = buscarZonaPorId(arr, id, len);
+
+		if (indice != -1) {
+			arr[indice].cantidadAusente = cantidadAusente;
+			arr[indice].cantidadVirtual = cantidadVirtual;
+			codigoError = 0;
+		}
+	}
+
+	return codigoError;
+}
+
 
 
 
@@ -203,6 +226,9 @@ void imprimirZona(Zona zona) {
 	if (zona.isEmpty == FALSE) {
 		printf("|%6d", zona.id);
 		printf("|%s %s %s %s", zona.calles[0], zona.calles[1], zona.calles[2], zona.calles[3]);
+		printf("|%10s", estadoZonas[zona.estadoZona]);
+		printf("|%10d", zona.cantidadAusente);
+		printf("|%10d", zona.cantidadVirtual);
 		printf("|%20s|\n", localidades[zona.localidad]);
 	}
 }
@@ -212,6 +238,9 @@ void imprimirCabeceraZona(void) {
 
 		printf("|%6s", "ID");
 		printf("|%35s", "CALLES");
+		printf("|%10s", "ESTADO");
+		printf("|%10s", "AUSENTE");
+		printf("|%10s", "VIRTUAL");
 		printf("|%20s|\n\n", "LOCALIDAD");
 }
 
@@ -350,14 +379,19 @@ int hacerCargaForzadaZona(Zona arr[], int len) {
 
 	//zonas
 	int localidades[] = {0, 1, 2, 3, 4, 5};
-	char calles[][4][51] = {{"Pedernera", "SanLorenzo", "Alzaga", "Suipacha"}, {"Azcuenaga", "Pilar", "Centenario", "Aguapey"}, {"Alvear", "Almeyra", "Aguilar", "Calvo"}, {"Goezn", "Rioja", "Catamarca", "Gales"}};
-
+	char calles[][4][51] = {{"Pedernera", "SanLorenzo", "Alzaga", "Suipacha"}, {"Azcuenaga", "Pilar", "Centenario", "Aguapey"}, {"Alvear", "Almeyra", "Aguilar", "Calvo"}, {"Goezn", "Rioja", "Catamarca", "Gales"}, {"Pedernera", "SanLorenzo", "Alzaga", "Suipacha"}, {"Azcuenaga", "Pilar", "Centenario", "Aguapey"}, {"Alvear", "Almeyra", "Aguilar", "Calvo"}, {"Goezn", "Rioja", "Catamarca", "Gales"}, {"Pedernera", "SanLorenzo", "Alzaga", "Suipacha"}, {"Azcuenaga", "Pilar", "Centenario", "Aguapey"}, {"Alvear", "Almeyra", "Aguilar", "Calvo"}, {"Goezn", "Rioja", "Catamarca", "Gales"}, {"Pedernera", "SanLorenzo", "Alzaga", "Suipacha"}, {"Azcuenaga", "Pilar", "Centenario", "Aguapey"}, {"Alvear", "Almeyra", "Aguilar", "Calvo"}};
+	int cantidadVirtual[] = {150, 170, 100, 56, 127, 78};
+	int cantidadAusente[] = {15, 0, 35, 2, 7, 18};
 	codigoError = -1;
 
 	if (arr != NULL && len > 0) {
 		for(int i = 0; i < len; i++) {
 			id = incrementarZonaId();
 			codigoError = agregarZona(arr, len, id, calles[0][i], localidades[i]);
+			if (codigoError == 0) {
+				codigoError = cargarDatos(arr, id, len, cantidadVirtual[i], cantidadAusente[i]);
+				arr[i].estadoZona = 1;
+			}
 			if (codigoError == -1) {
 				codigoError = -1;
 				break;
