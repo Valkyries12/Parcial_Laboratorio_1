@@ -149,9 +149,35 @@ int main(void) {
 										break;
 									case 3:
 										puts("\n=== MODIFICAR FECHA DE NACIMIENTO ===\n");
+
+										do {
+											codigoError = utn_getInt(&opcionMenu, "\n1- Modificar día de nacimiento. \n2- Modificar mes de nacimiento. \n3- Modificar año de nacimiento. \n4- Atras. \n\nIngrese una opción: ", "\nOpción inválidad. Reintente.\n", 4, 1, 3);
+
+											switch (opcionMenu) {
+												case 1:
+													codigoError = utn_getInt(&censistas[indice].fechaNacimiento.dia, "\nIngrese el nuevo día: ", "\nError. Debe contener un número del 1 al 31\n", 31, 1, 3);
+													utn_imprimirMensajes(codigoError, "\nEl día de nacimiento fué modificado satisfactoriamente.\n", "\nHa ocurrido un error al modificar el día de nacimiento.\n");
+													break;
+												case 2:
+													codigoError = utn_getInt(&censistas[indice].fechaNacimiento.mes, "\nIngrese el nuevo mes: ", "\nError. Debe contener un número del 1 al 12\n", 12, 1, 3);
+													utn_imprimirMensajes(codigoError, "\nEl mes de nacimiento fué modificado satisfactoriamente.\n", "\nHa ocurrido un error al modificar el mes de nacimiento.\n");
+													break;
+												case 3:
+													codigoError = utn_getInt(&censistas[indice].fechaNacimiento.anio, "\nIngrese el nuevo año: ", "\nError. Debe contener un número del 1950 al 2002\n", 2002, 1950, 3);
+													//hacer funcion para cambiar anio
+													censistas[indice].edad = 2022 - censistas[indice].fechaNacimiento.anio;
+													utn_imprimirMensajes(codigoError, "\nEl año de nacimiento fué modificado satisfactoriamente.\n", "\nHa ocurrido un error al modificar el año de nacimiento.\n");
+													break;
+												default:
+													break;
+											}
+										} while(opcionMenu != 4 && codigoError == 0);
 										break;
 									case 4:
 										puts("\n=== MODIFICAR ESTADO DEL CENSISTA ===\n");
+
+										codigoError = utn_getInt(&censistas[indice].estadoCensista, "\nIngrese un nuevo estado del censista 0 ACTIVO, 1 INACTIVO, 2 LIBERADO: ", "\nOpción inválida. Sólo se permite 0para ACTIVO, 1 para INACTIVO y 2 para LIBERADO.\n", 2, 0, 3);
+										utn_imprimirMensajes(codigoError, "\nSe ha modificado el estado del censista satisfactoriamente.\n", "\nHa ocurrido un error al modificar el estado del censista.\n");
 										break;
 									case 5:
 										puts("\n=== MODIFICAR DIRECCIÓN ===\n");
