@@ -92,8 +92,16 @@ int eliminarCensista(Censista arr[], int id, int len);
 ///
 /// @param arr -> array de censistas
 /// @param len -> longitud del array
-/// @return En caso de haber al menos un asociado TRUE (1), sino FALSE (0)
+/// @return En caso de haber al menos un censista TRUE (1), sino FALSE (0)
 int hayCensistaCargado(Censista arr[], int len);
+
+
+/// @brief Verifica si hay al menos 1 censista con zona asignada
+///
+/// @param arr -> array de censistas
+/// @param len -> longitud del array
+/// @return En caso de haber al menos un censista con zona asignada TRUE (1), sino FALSE (0)
+int hayCensistaAsignado(Censista arr[], int len);
 
 
 /// @brief Verifica si existe o no el censista en base al id proporcionado

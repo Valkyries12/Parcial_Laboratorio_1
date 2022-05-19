@@ -93,7 +93,7 @@ int main(void) {
 								codigoError = utn_getInt(&mes, "\nIngrese el mes de nacimiento del censista [1 a 12]: ", "\nError. Debe contener sólo números del 1 al 12.\n", 12, 1, 3);
 
 								if (codigoError == 0) {
-									codigoError = utn_getInt(&anio, "\nIngrese el año de nacimiento del censista [1960 a 2022]: ", "\nError. Debe contener sólo números entre 1960 y 2022.\n", 2022, 1960, 3);
+									codigoError = utn_getInt(&anio, "\nIngrese el año de nacimiento del censista [1960 a 2004]: ", "\nError. Debe contener sólo números entre 1960 y 2004.\n", 2004, 1960, 3);
 
 									if (codigoError == 0) {
 										edad = 2022 - anio;
@@ -259,14 +259,14 @@ int main(void) {
 							imprimirCabeceraCensista();
 							imprimirCensista(censistas[indice]);
 							//cambiar por lapropiedad directa
-							codigoError = utn_getInt(&zonaAsignada, "\n\nIngrese la zona a asignar [11,12,13,14,15,16]: ", "\nOpción inválida. Solo se permite del 11 al 16.\n", 16, 11, 3);
+							codigoError = utn_getInt(&censistas[indice].idZona, "\n\nIngrese la zona a asignar [11,12,13,14,15,16]: ", "\nOpción inválida. Solo se permite del 11 al 16.\n", 16, 11, 3);
 
 						} else {
 							puts("\nEl ID ingresado es inexistente.\n");
 						}
 						if (codigoError == 0) {
 							//refactoizar con asignarZona()
-							censistas[indice].idZona = zonaAsignada;
+//							censistas[indice].idZona = zonaAsignada;
 							censistas[indice].estadoCensista = 0;
 						}
 						utn_imprimirMensajes(codigoError, "\nSe ha asignado una zona al censita satisfactoriamente.\n", "\nHa ocurrido un error al asignar zona al censista.\n");
@@ -277,7 +277,7 @@ int main(void) {
 				case 6:
 					puts("\n=== CARGA DE DATOS ===\n");
 					//hay censistasAsignados HACER
-					if (hayCensistaCargado(censistas, CANTIDAD_CENSISTAS) && hayZonaCargada(zonas, CANTIDAD_ZONAS)) {
+					if (hayCensistaCargado(censistas, CANTIDAD_CENSISTAS) && hayZonaCargada(zonas, CANTIDAD_ZONAS) && hayCensistaAsignado(censistas, CANTIDAD_CENSISTAS)) {
 						codigoError = utn_getInt(&id, "\nIngrese el ID del censista para la carga de datos: ", "\nError. Sólo debe haber números del 150 al 999.\n", 999, 150, 3);
 						if (codigoError == 0 && existeCensista(censistas, CANTIDAD_CENSISTAS, id)) {
 							indice = buscarCensistaPorId(censistas, id, CANTIDAD_CENSISTAS);
@@ -287,20 +287,19 @@ int main(void) {
 							codigoError = utn_getInt(&cantidadVirtual, "\nIngrese cantidad de censados virtuales: ", "\nError. Sólo se permiten números del 0 al 999.\n", 999, 0, 3);
 							if (codigoError == 0) {
 								codigoError = utn_getInt(&cantidadAusente, "\nIngrese la cantidad de ausentes: ", "\nError. Sólo se permiten números.\n", 999, 0, 3);
-
 								if (codigoError == 0) {
-									int indiceZona = buscarZonaPorId(zonas, censistas[indice].idZona, CANTIDAD_ZONAS);
+									int indiceZona = buscarZonaPorIdHardcode(zonas, censistas[indice].idZona, CANTIDAD_ZONAS);
 									int idZona = zonas[indiceZona].id;
-
 									codigoError = cargarDatos(zonas, idZona, CANTIDAD_ZONAS, cantidadVirtual, cantidadAusente);
-
+									censistas[indice].estadoCensista = 2;
+									zonas[indiceZona].estadoZona = 1;
 								}
 							}
 
 							utn_imprimirMensajes(codigoError, "\nSe han cargado los datos satisfactoriamente.\n", "\nHa sucedido un error al cargar los datos\n");
 						}
 					} else {
-						puts("\nDebe haber al menos una zona y un censista cargado.\n");
+						puts("\nDebe haber al menos una zona y un censista cargado con zona asignada.\n");
 					}
 					break;
 				case 7:

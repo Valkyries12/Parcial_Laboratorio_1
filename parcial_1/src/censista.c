@@ -100,6 +100,7 @@ int agregarCensista(Censista arr[], int len, int id, char * nombre, char * apell
 			strncpy(arr[indice].direccion.calle, nombreCalle, strlen(nombreCalle));
 			arr[indice].direccion.numero = numeroCalle;
 			arr[indice].direccion.isEmpty = FALSE;
+			arr[indice].idZona = 0;
 			arr[indice].isEmpty = FALSE;
 			codigoError = 0;
 		} else {
@@ -123,6 +124,8 @@ int eliminarCensista(Censista arr[], int id, int len) {
 		indice = buscarCensistaPorId(arr, id, len);
 		if (indice != -1) {
 			arr[indice].isEmpty = TRUE;
+			arr[indice].direccion.isEmpty = TRUE;
+			arr[indice].fechaNacimiento.isEmpty = TRUE;
 			codigoError = 0;
 		}
 	}
@@ -186,6 +189,24 @@ int hayCensistaCargado(Censista arr[], int len) {
 
 	return hayAlgo;
 }
+
+
+int hayCensistaAsignado(Censista arr[], int len) {
+	int hayAlgo;
+
+	hayAlgo = FALSE;
+	if (arr != NULL && len > 0) {
+		for(int i = 0; i < len; i++) {
+			if (arr[i].idZona >= 11 && arr[i].idZona <= 16) {
+				hayAlgo = TRUE;
+				break;
+			}
+		}
+	}
+
+	return hayAlgo;
+}
+
 
 
 int existeCensista(Censista arr[], int len, int id) {

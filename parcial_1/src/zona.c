@@ -52,12 +52,32 @@ int buscarEspacioLibreZona(Zona arr[], int len) {
 
 
 
+int buscarZonaPorIdHardcode(Zona arr[], int id, int len) {
+	int indice;
+
+	indice = -1;
+	if (arr != NULL && id > 0 && len > 0) {
+		for(int i = 0; i < len; i++) {
+//			printf("\ncensista idZona es : %d, el id de la zona arr[i].id es: %d" , id, arr[i].id);
+			int aux = id - arr[i].id;
+			if ((arr[i].id + aux) == id && arr[i].isEmpty == FALSE) {
+				indice = i;
+				break;
+			}
+		}
+	}
+
+	return indice;
+}
+
+
 int buscarZonaPorId(Zona arr[], int id, int len) {
 	int indice;
 
 	indice = -1;
 	if (arr != NULL && id > 0 && len > 0) {
 		for(int i = 0; i < len; i++) {
+//			printf("\ncensista idZona es : %d, el id de la zona arr[i].id es: %d" , id, arr[i].id);
 			if (arr[i].id == id && arr[i].isEmpty == FALSE) {
 				indice = i;
 				break;
@@ -106,9 +126,7 @@ int cargarDatos(Zona arr[], int id, int len, int cantidadVirtual, int cantidadAu
 
 	if (arr != NULL && id > 0 && len > 0 && cantidadAusente >= 0 && cantidadAusente >= 0) {
 		indice = buscarZonaPorId(arr, id, len);
-
 		if (indice != -1) {
-
 			arr[indice].cantidadAusente = cantidadAusente;
 			arr[indice].cantidadVirtual = cantidadVirtual;
 			codigoError = 0;
@@ -229,7 +247,11 @@ void imprimirZona(Zona zona, Censista censista) {
 		printf("|%10s", estadoZonas[zona.estadoZona]);
 		printf("|%10d", zona.cantidadAusente);
 		printf("|%10d", zona.cantidadVirtual);
-		printf("|%3s %3s|", censista.nombre, censista.apellido);
+		if (censista.idZona < 11) {
+			printf("|%20s", "sin responsable");
+		} else {
+			printf("|%3s %3s", censista.nombre, censista.apellido);
+		}
 		printf("|%20s|\n", localidades[zona.localidad]);
 	}
 }

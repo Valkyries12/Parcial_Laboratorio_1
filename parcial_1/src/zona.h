@@ -49,6 +49,17 @@ int buscarEspacioLibreZona(Zona arr[], int len);
 int buscarZonaPorId(Zona arr[], int id, int len);
 
 
+
+/// @brief Busca el indice de la zona mediante un id
+///
+/// @param arr -> array de zonas
+/// @param id -> id de la zona
+/// @param len -> longitud del array
+/// @return -> En caso de encontrarlo devuelve el indice, en caso de no encontrarlo (-1)
+int buscarZonaPorIdHardcode(Zona arr[], int id, int len);
+
+
+
 /// @brief Carga una zona al array en el primer indice disponible
 ///
 /// @param arr -> array de zonas
