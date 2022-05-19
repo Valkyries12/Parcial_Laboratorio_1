@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "censista.h"
 #include "fechaNacimiento.h"
@@ -48,8 +49,12 @@ int main(void) {
 	int localidad;
 	int codigoError;
 	int opcionMenu;
+//	char opcionMenuChar;
 	int indice;
 	int zonaAsignada;
+//	int hayCargaForzada;
+
+//	hayCargaForzada = FALSE;
 
 	setbuf(stdout, NULL);
 	puts("=== INICIO DEL PROGRAMA ===");
@@ -63,13 +68,20 @@ int main(void) {
 			switch (opcionMenu) {
 				case 0:
 					puts("\n=== CARGA FORZADA ===\n");
-					codigoError = hacerCargaForzadaCensista(censistas, CANTIDAD_CENSISTAS);
-					if (codigoError == 0) {
-						codigoError = hacerCargaForzadaZona(zonas, CANTIDAD_ZONAS);
 
+					if (hayCensistaCargado(censistas, CANTIDAD_CENSISTAS) || hayZonaCargada(zonas, CANTIDAD_ZONAS)) {
+
+						puts("\nImposible hacer carga forzada si hay algo cargado.\n");
+
+					} else {
+						utn_imprimirMensajes(codigoError, "\nSe ha hecho la carga forzada satisfactoriamente.\n", "\nHa ocurrido un error al hacer la carga forzada.\n");
+						codigoError = hacerCargaForzadaCensista(censistas, CANTIDAD_CENSISTAS);
+						if (codigoError == 0) {
+							codigoError = hacerCargaForzadaZona(zonas, CANTIDAD_ZONAS);
+
+						}
 					}
 
-					utn_imprimirMensajes(codigoError, "\nSe ha hecho la carga forzada satisfactoriamente.\n", "\nHa ocurrido un error al hacer la carga forzada.\n");
 				break;
 				case 1:
 					puts("\n=== CARGA DEL CENSISTA ===\n");
@@ -115,6 +127,37 @@ int main(void) {
 					break;
 				case 3:
 					puts("\n=== ELIMINAR CENSISTA ===\n");
+					if (hayCensistaCargado(censistas, CANTIDAD_CENSISTAS)) {
+						codigoError = utn_getInt(&id, "\nIngrese el ID del censista a eliminar: ", "\nError. Sólo se permiten números del 150 al 999.\n", 999, 150, 3);
+						if (codigoError == 0 && existeCensista(censistas, CANTIDAD_CENSISTAS, id)) {
+							indice = buscarCensistaPorId(censistas, id, CANTIDAD_CENSISTAS);
+							imprimirCabeceraCensista();
+							imprimirCensista(censistas[indice]);
+
+//							do {
+//								codigoError = utn_getString(&opcionMenuChar, "\n¿Está seguro de eliminar al censista?. [s/n]: ", "\nOpción inválida. Solo se permite s/n.\n", 3, 1, 1);
+//								if (opcionMenuChar != 'n' || opcionMenuChar != 's') {
+//									puts("\nSolo está permitido s/n.\n");
+//								}
+//							} while(opcionMenuChar != 'n' || opcionMenuChar != 's');
+
+
+//							if (codigoError == 0) {
+//								if (opcionMenuChar == 's') {
+//									codigoError = eliminarCensista(censistas, id, CANTIDAD_CENSISTAS);
+//								}
+//							}
+							codigoError = eliminarCensista(censistas, id, CANTIDAD_CENSISTAS);
+
+							utn_imprimirMensajes(codigoError, "\nSe ha eliminado al censista satisfactoriamente.\n", "\nHa ocurrido un error al eliminar al censista.\n");
+
+						} else {
+							puts("\nEl ID ingresado es inexistente.\n");
+						}
+
+					} else {
+						puts("\nDebe haber al menos un censista cargado.\n");
+					}
 					break;
 				case 4:
 					puts("\n=== CARGAR ZONA ===\n");
