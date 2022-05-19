@@ -124,6 +124,44 @@ int main(void) {
 					break;
 				case 2:
 					puts("\n=== MODIFICAR CENSISTA ===\n");
+					if (hayCensistaCargado(censistas, CANTIDAD_CENSISTAS)) {
+						codigoError = utn_getInt(&id, "\nIngrese el ID del censista a modificar: ", "\nError. Sólo se permiten números del 150 al 999.\n", 999, 150, 3);
+						if (codigoError == 0 && existeCensista(censistas, CANTIDAD_CENSISTAS, id)) {
+							indice = buscarCensistaPorId(censistas, id, CANTIDAD_CENSISTAS);
+							imprimirCabeceraCensista();
+							imprimirCensista(censistas[indice]);
+							//me quede aca tengo que hacer el modificar
+							do {
+								codigoError = utn_getInt(&opcionMenu, "\n1- Modificar nombre. \n2- Modificar apellido. \n3- Modificar fecha de nacimiento. \n4- Modificar estado del censista. \n5- Modificar dirección. \n6- Salir. \n\nIngrese una opción: ", "\nOpción inválida. Solo se permite del 1 al 6.\n", 6, 1, 3);
+
+								switch (opcionMenu) {
+									case 1:
+										puts("\n=== MODIFICAR NOMBRE ===\n");
+
+										break;
+									case 2:
+										puts("\n=== MODIFICAR APELLIDO ===\n");
+										break;
+									case 3:
+										puts("\n=== MODIFICAR FECHA DE NACIMIENTO ===\n");
+										break;
+									case 4:
+										puts("\n=== MODIFICAR ESTADO DEL CENSISTA ===\n");
+										break;
+									case 5:
+										puts("\n=== MODIFICAR DIRECCIÓN ===\n");
+										break;
+									default:
+										break;
+								}
+							} while(opcionMenu != 6 && codigoError == 0);
+
+						} else {
+							puts("\nEl ID ingresado es inexistente.\n");
+						}
+					} else {
+						puts("\nDebe haber al menos un censista cargado.\n");
+					}
 					break;
 				case 3:
 					puts("\n=== ELIMINAR CENSISTA ===\n");
